@@ -1,0 +1,36 @@
+paths:
+    migrations: phinx/migrations
+    seeds: phinx/seeds
+
+environments:
+    default_migration_table: phinxlog
+    default_database: development
+    production:
+        adapter: mysql
+        host: localhost
+        name: production_db
+        user: root
+        pass: ''
+        port: 3306
+        charset: utf8
+
+    development:
+        adapter: mysql
+        host: localhost
+        name: ftwo
+        user: ftwo
+        pass: ftwo_pass
+        port: 3307
+        charset: utf8
+        unix_socket: /home/mateusz/projects/data/f2/mysql.sock
+
+    testing:
+        adapter: mysql
+        host: localhost
+        name: testing_db
+        user: root
+        pass: ''
+        port: 3306
+        charset: utf8
+
+version_order: creation
