@@ -12,10 +12,12 @@ class Request
     private $cookies;
     private $getParams = [];
 
-    public function __construct()
+    public function __construct($pathParams)
     {
-        $this->cookies = new Cookies();
-        $this->getParams = filter_input_array(INPUT_GET);
+        $this->cookies   = new Cookies();
+        $getParams = filter_input_array(INPUT_GET) ?? [];
+        $fitleredParams = filter_var_array($pathParams, FILTER_SANITIZE_STRING) ?? [];
+        $this->getParams = array_merge($getParams, $fitleredParams);
     }
 
     /**

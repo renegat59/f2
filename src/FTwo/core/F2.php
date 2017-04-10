@@ -28,17 +28,17 @@ class F2
     public function start()
     {
         $router  = self::$components->get('router');
-        $middleware  = self::$components->get('middleware');
-        $request = new Request();
-        $response = new Response();
-        $middleware->runBefore($request);
-        $router->route($request, $response);
-        $middleware->runAfter($response);
+        $router->route();
     }
 
     public static function db(): DbConnection
     {
         return self::$components->get('db');
+    }
+
+    public static function getComponent($componentName): Component
+    {
+        return self::$components->get($componentName);
     }
 
 }

@@ -19,17 +19,23 @@ class Router extends Component
         $this->routes = array_merge($this->defaultRoutes, $config['routes'] ?? []);
     }
 
-    public function route(\FTwo\http\Request $request, \FTwo\http\Response $response)
+    public function route()
     {
-        $path = $request->server('PATH_INFO') ?? '/';
-        list($controllerName, $function) = $this->splitRoute($path);
+        $path     = filter_input(INPUT_SERVER, 'PATH_INFO') ?? '/';
+        list($controllerName, $function, $params) = $this->splitRoute($path);
+        $request  = new \FTwo\http\Request($params);
+        $response = new \FTwo\http\Response();
         if (!class_exists($controllerName) ||
             !method_exists($controllerName, $function)) {
-            $response->setStatus(\FTwo\http\StatusCode::HTTP_NOT_FOUND)
-                ->render('errors/error', ['code'=>\FTwo\http\StatusCode::HTTP_NOT_FOUND]);
-//            (new \FTwo\controllers\Error())->error($request, $response);
+            $response
+                ->setStatus(\FTwo\http\StatusCode::HTTP_NOT_FOUND)
+                ->render('errors/error', ['code' => \FTwo\http\StatusCode::HTTP_NOT_FOUND]);
+        } else {
+            $middleware = F2::getComponent('middleware');
+            $middleware->runBefore($request, $response);
+            (new $controllerName())->$function($request, $response);
+            $middleware->runAfter($request, $response);
         }
-        (new $controllerName())->$function($request, $response);
     }
 
     /**
@@ -39,11 +45,21 @@ class Router extends Component
      */
     private function splitRoute(string $path): array
     {
-        $realPath = $this->routes[$path] ?? $path;
-        list($controllerName, $function) = explode('/', ltrim($realPath, '/'));
+        $realPath       = $this->routes[$path] ?? $path;
+        list($controllerName, $function, $params) = explode('/', ltrim($realPath, '/'), 3);
+        $getParams      = [];
+        $explodedParams = explode('/', $params);
+        $len            = count($explodedParams);
+        for ($key = 0; $key < $len; $key += 2) {
+            if (!empty($explodedParams[$key])) {
+                $getParams[$explodedParams[$key]] = $explodedParams[$key + 1] ?? '';
+            }
+        }
+
         return array(
             '\\FTwo\\controllers\\'.ucfirst($controllerName),
-            $function
+            $function,
+            $getParams
         );
     }
 }

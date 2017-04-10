@@ -10,13 +10,13 @@ namespace FTwo\core;
 class MiddlewareStack extends Component
 {
 
-    public function runBefore(\FTwo\http\Request $request)
+    public function runBefore(\FTwo\http\Request $request, \FTwo\http\Response $response)
     {
-
+//        echo "run before";
     }
 
-    public function runAfter(\FTwo\http\Response $response)
+    public function runAfter(\FTwo\http\Request $request, \FTwo\http\Response $response)
     {
-        
+//        echo "run after";
     }
 }
