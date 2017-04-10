@@ -9,8 +9,8 @@ namespace FTwo\controllers;
  */
 class Error extends \FTwo\core\BaseController
 {
-    public function error($code, $message)
-    {
-        echo $code." ".$message;
-    }
+//    public function error($code, $message)
+//    {
+//        echo $code." ".$message;
+//    }
 }

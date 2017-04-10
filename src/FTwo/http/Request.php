@@ -7,13 +7,15 @@ namespace FTwo\http;
  *
  * @author Mateusz P <bananq@gmail.com>
  */
-class HttpRequest
+class Request
 {
     private $cookies;
+    private $getParams = [];
 
     public function __construct()
     {
         $this->cookies = new Cookies();
+        $this->getParams = filter_input_array(INPUT_GET);
     }
 
     /**

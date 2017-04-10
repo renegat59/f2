@@ -9,5 +9,5 @@ namespace FTwo\core;
  */
 class BaseController
 {
-    //put your code here
+    
 }

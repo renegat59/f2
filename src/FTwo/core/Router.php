@@ -19,19 +19,21 @@ class Router extends Component
         $this->routes = array_merge($this->defaultRoutes, $config['routes'] ?? []);
     }
 
-    public function route(string $path)
+    public function route(\FTwo\http\Request $request, \FTwo\http\Response $response)
     {
+        $path = $request->server('PATH_INFO') ?? '/';
         list($controllerName, $function) = $this->splitRoute($path);
         if (!class_exists($controllerName) ||
             !method_exists($controllerName, $function)) {
-            http_response_code(404);
-            (new \FTwo\controllers\Error())->error(404, 'Not Found');
+            $response->setStatus(\FTwo\http\StatusCode::HTTP_NOT_FOUND)
+                ->render('errors/error', ['code'=>\FTwo\http\StatusCode::HTTP_NOT_FOUND]);
+//            (new \FTwo\controllers\Error())->error($request, $response);
         }
-        (new $controllerName())->$function();
+        (new $controllerName())->$function($request, $response);
     }
 
     /**
-     * Transforms path to array containing Controller class and function to call
+     * Transforms path to array containing Controller class and function to call.
      * @param string $path
      * @return array Array with the first element containing name of the class to use and function to call
      */
