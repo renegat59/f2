@@ -13,5 +13,8 @@ return [
     ],
     'params' => [
         'template'=>'default'
+    ],
+    'middleware' => [
+        
     ]
 ];

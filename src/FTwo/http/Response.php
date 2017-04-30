@@ -27,8 +27,6 @@ class Response
     public function render(string $view, array $params): Response
     {
         $template = F2::getConfig('params.template');
-        //TODO: set this variable in a middleware
-        $this->viewVariables['language']='en';
         $renderer = new \FTwo\core\Renderer($template, $this->viewVariables);
         $renderer->render($view, $params);
 //        echo $this->getStatus();

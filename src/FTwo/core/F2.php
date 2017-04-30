@@ -22,7 +22,7 @@ class F2
         self::$components = new ComponentContainer();
         self::$components->init('db', new DbConnection(self::$config['db']));
         self::$components->init('router', new Router(self::$config['router']));
-        self::$components->init('middleware', new MiddlewareStack());
+        self::$components->init('middleware', $this->generateMiddleware(self::$config['middleware']));
     }
 
     public function start()
@@ -71,5 +71,12 @@ class F2
             return $value;
         }
         return self::$config;
+    }
+
+    private function generateMiddleware(array $middlewareConfig): MiddlewareStack
+    {
+        $stack = new MiddlewareStack();
+        $stack->appendMiddleware(new \FTwo\middleware\LocaleMiddleware());
+        return $stack;
     }
 }

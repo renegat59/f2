@@ -27,17 +27,17 @@ class Router extends Component
         list($controllerName, $function, $params) = $this->splitRoute($path);
         $this->request = new \FTwo\http\Request($params);
         $this->response = new \FTwo\http\Response();
+        $middleware = F2::getComponent('middleware');
+        $this->response = $middleware->runBefore($this->request, $this->response);
         if (!class_exists($controllerName) ||
             !method_exists($controllerName, $function)) {
             $this->response
                 ->setStatus(\FTwo\http\StatusCode::HTTP_NOT_FOUND)
                 ->render('errors/error', ['code' => \FTwo\http\StatusCode::HTTP_NOT_FOUND]);
         } else {
-            $middleware = F2::getComponent('middleware');
-            $middleware->runBefore($this->request, $this->response);
             (new $controllerName())->$function($this->request, $this->response);
-            $middleware->runAfter($this->request, $this->response);
         }
+        $this->response = $middleware->runAfter($this->request, $this->response);
     }
 
     public function getResponse(): \FTwo\http\Response
