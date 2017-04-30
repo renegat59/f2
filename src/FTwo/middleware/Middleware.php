@@ -13,10 +13,10 @@ abstract class Middleware
     /**
      * Function run before every request
      */
-    public abstract function before(\FTwo\http\Request $request, \FTwo\http\Response $response): \FTwo\http\Response;
+    abstract public function before(\FTwo\http\Request $request, \FTwo\http\Response $response): \FTwo\http\Response;
 
     /**
      * Function run after every request
      */
-    public abstract function after(\FTwo\http\Request $request, \FTwo\http\Response $response): \FTwo\http\Response;
+    abstract public function after(\FTwo\http\Request $request, \FTwo\http\Response $response): \FTwo\http\Response;
 }

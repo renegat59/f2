@@ -6,4 +6,5 @@
     <body>
         {{include(body)}}
     </body>
+    {{include(tracking)}}
 </html>

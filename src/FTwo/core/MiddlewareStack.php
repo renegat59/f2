@@ -14,7 +14,6 @@ class MiddlewareStack extends Component
     public function __construct()
     {
         $middlewarePath = F2::getPath('middleware');
-        
     }
 
     public function runBefore(\FTwo\http\Request $request, \FTwo\http\Response $response): \FTwo\http\Response
@@ -53,7 +52,6 @@ class MiddlewareStack extends Component
         if ($position > 0) {
             array_splice($this->stack, $position, 0, $middleware);
         } else {
-            
         }
         return $this;
     }

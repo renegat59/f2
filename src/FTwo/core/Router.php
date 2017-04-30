@@ -13,7 +13,13 @@ class Router extends Component
     private $defaultRoutes = [
         '/' => 'main/index'
     ];
+    /**
+     * @var \FTwo\http\Response
+     */
     private $response;
+    /**
+     * @var \FTwo\http\Request
+     */
     private $request;
 
     public function __construct($config)
@@ -33,6 +39,7 @@ class Router extends Component
             !method_exists($controllerName, $function)) {
             $this->response
                 ->setStatus(\FTwo\http\StatusCode::HTTP_NOT_FOUND)
+                ->addVariableToView('errorMessage', 'File not Found')
                 ->render('errors/error', ['code' => \FTwo\http\StatusCode::HTTP_NOT_FOUND]);
         } else {
             (new $controllerName())->$function($this->request, $this->response);

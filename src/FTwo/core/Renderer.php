@@ -42,16 +42,17 @@ class Renderer
     private function runIncludes(string $filePath): string
     {
         $fileContent = file_get_contents($filePath);
+
         $insertedContent = preg_replace_callback_array([
-            '/(\{\{include\((?P<view>.*?)\)\}\})/' => function($match) {
+            '/(\{\{include\((?P<view>.*?)\)\}\})/' => function ($match) {
                 //runs the include
                 return $this->runIncludes($this->getViewPath($match['view']));
             },
-            '/(\{\{renderContent\(\)\}\})/' => function() {
+            '/(\{\{renderContent\(\)\}\})/' => function () {
                 //runs the include on the main conent of the page
                 return $this->runIncludes($this->getViewPath($this->currentView));
             }
-            ], $fileContent);
+        ], $fileContent);
         return $insertedContent;
     }
 
@@ -65,12 +66,14 @@ class Renderer
     {
         $phpContent = preg_replace_callback_array(
             [
-            '/(\{\{=(?P<var>.*?)\}\})/' => function($match) {
+            '/(\{\{=(?P<var>.*?)\}\})/' => function ($match) {
                 //replaces simple variable:
                 $var = $match['var'];
                 return '<?php echo $_f2_'.$var.'; ?>';
             }
-            ], $content);
+            ],
+            $content
+        );
         return $phpContent;
     }
 

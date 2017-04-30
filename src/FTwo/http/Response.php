@@ -39,7 +39,8 @@ class Response
      * @param string $value
      * @return \FTwo\http\Response
      */
-    public function addVariableToView(string $variable, string $value) : Response {
+    public function addVariableToView(string $variable, string $value): Response
+    {
         $this->viewVariables[$variable] = $value;
         return $this;
     }
