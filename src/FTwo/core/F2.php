@@ -18,7 +18,7 @@ class F2
 
     public function __construct(array $config)
     {
-        self::$config     = $config;
+        self::$config = $config;
         self::$components = new ComponentContainer();
         self::$components->init('db', new DbConnection(self::$config['db']));
         self::$components->init('router', new Router(self::$config['router']));
@@ -27,7 +27,7 @@ class F2
 
     public function start()
     {
-        $router  = self::$components->get('router');
+        $router = self::$components->get('router');
         $router->route();
     }
 
@@ -41,4 +41,35 @@ class F2
         return self::$components->get($componentName);
     }
 
+    public static function getPath($folder)
+    {
+        $currentPath = getcwd();
+        return $currentPath.DIRECTORY_SEPARATOR.'src'.DIRECTORY_SEPARATOR.'FTwo'.DIRECTORY_SEPARATOR.$folder;
+    }
+
+    /**
+     * Returns full config or desired config value. To get value that is deeper in the config array use keys like:
+     * params.template
+     * If there is no correct value, an exception is thrown
+     * @param string $key
+     * @return array|string
+     * @throws exceptions\F2Exception
+     */
+    public static function getConfig(string $key = null)
+    {
+        if ($key !== null) {
+            $keys = explode('.', $key);
+            $value = self::$config[$keys[0]];
+            $keyLength = count($keys);
+            for ($ii=1; $ii < $keyLength; $ii++) {
+                if (isset($value[$keys[$ii]])) {
+                    $value = $value[$keys[$ii]];
+                } else {
+                    throw new exceptions\F2Exception("Config key <$keys[$ii]> incorrect");
+                }
+            }
+            return $value;
+        }
+        return self::$config;
+    }
 }

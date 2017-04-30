@@ -2,6 +2,8 @@
 
 namespace FTwo\http;
 
+use \FTwo\core\F2;
+
 /**
  * Class containing HTTP Response information
  *
@@ -9,12 +11,7 @@ namespace FTwo\http;
  */
 class Response
 {
-    
-
-    public function __construct()
-    {
-        
-    }
+    private $viewVariables = array();
 
     public function setStatus(int $statusCode): Response
     {
@@ -29,7 +26,23 @@ class Response
 
     public function render(string $view, array $params): Response
     {
-        echo $this->getStatus();
+        $template = F2::getConfig('params.template');
+        //TODO: set this variable in a middleware
+        $this->viewVariables['language']='en';
+        $renderer = new \FTwo\core\Renderer($template, $this->viewVariables);
+        $renderer->render($view, $params);
+//        echo $this->getStatus();
+        return $this;
+    }
+
+    /**
+     * Adds a variable to the rendered view;
+     * @param string $variable
+     * @param string $value
+     * @return \FTwo\http\Response
+     */
+    public function addVariableToView(string $variable, string $value) : Response {
+        $this->viewVariables[$variable] = $value;
         return $this;
     }
 }

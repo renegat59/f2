@@ -77,13 +77,13 @@
     Boolean values should be specified by using the strings
     "true" and "false" rather than the integers 0 and 1.
  -->
- <rule ref="Generic.Formatting.MultipleStatementAlignment">
+<!-- <rule ref="Generic.Formatting.MultipleStatementAlignment">
   <properties>
-   <property name="maxPadding" value="8"/>
+   <property name="maxPadding" value="20"/>
    <property name="ignoreMultiLine" value="true"/>
-   <property name="error" value="true"/>
+   <property name="error" value="false"/>
   </properties>
- </rule>
+ </rule>-->
 
  <!--
     If you want to completely disable an error message in a sniff

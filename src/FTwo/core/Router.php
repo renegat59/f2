@@ -13,6 +13,8 @@ class Router extends Component
     private $defaultRoutes = [
         '/' => 'main/index'
     ];
+    private $response;
+    private $request;
 
     public function __construct($config)
     {
@@ -21,21 +23,31 @@ class Router extends Component
 
     public function route()
     {
-        $path     = filter_input(INPUT_SERVER, 'PATH_INFO') ?? '/';
+        $path = filter_input(INPUT_SERVER, 'PATH_INFO') ?? '/';
         list($controllerName, $function, $params) = $this->splitRoute($path);
-        $request  = new \FTwo\http\Request($params);
-        $response = new \FTwo\http\Response();
+        $this->request = new \FTwo\http\Request($params);
+        $this->response = new \FTwo\http\Response();
         if (!class_exists($controllerName) ||
             !method_exists($controllerName, $function)) {
-            $response
+            $this->response
                 ->setStatus(\FTwo\http\StatusCode::HTTP_NOT_FOUND)
                 ->render('errors/error', ['code' => \FTwo\http\StatusCode::HTTP_NOT_FOUND]);
         } else {
             $middleware = F2::getComponent('middleware');
-            $middleware->runBefore($request, $response);
-            (new $controllerName())->$function($request, $response);
-            $middleware->runAfter($request, $response);
+            $middleware->runBefore($this->request, $this->response);
+            (new $controllerName())->$function($this->request, $this->response);
+            $middleware->runAfter($this->request, $this->response);
         }
+    }
+
+    public function getResponse(): \FTwo\http\Response
+    {
+        return $this->response;
+    }
+
+    public function getRequest(): \FTwo\http\Request
+    {
+        return $this->request;
     }
 
     /**
@@ -45,11 +57,11 @@ class Router extends Component
      */
     private function splitRoute(string $path): array
     {
-        $realPath       = $this->routes[$path] ?? $path;
+        $realPath = $this->routes[$path] ?? $path;
         list($controllerName, $function, $params) = explode('/', ltrim($realPath, '/'), 3);
-        $getParams      = [];
+        $getParams = [];
         $explodedParams = explode('/', $params);
-        $len            = count($explodedParams);
+        $len = count($explodedParams);
         for ($key = 0; $key < $len; $key += 2) {
             if (!empty($explodedParams[$key])) {
                 $getParams[$explodedParams[$key]] = $explodedParams[$key + 1] ?? '';

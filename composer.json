@@ -9,7 +9,8 @@
         }
     ],
     "require": {
-        "robmorgan/phinx": "^0.8.0"
+        "robmorgan/phinx": "^0.8.0",
+        "erusev/parsedown": "^1.6"
     },
     "require-dev": {
       "squizlabs/php_codesniffer": "2.*"
