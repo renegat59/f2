@@ -1,2 +1,2 @@
-dd {{=errorMessage}} {{=code}}
+<?php echo $this->getVar('errorMessage'); ?> <?php echo $code; ?>
 

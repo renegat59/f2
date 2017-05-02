@@ -1,1 +1,3 @@
-{{renderContent()}}
+<body>
+<?php $this->renderContent(); ?>
+</body>

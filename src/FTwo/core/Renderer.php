@@ -10,29 +10,31 @@ namespace FTwo\core;
 class Renderer
 {
     private $template = 'default';
-    private $viewVariables = array();
+    private $globalVariables = array();
     private $extension = 'php';
     private $currentView;
+    private $viewParams = array();
 
     /**
      * variable prefix for avoiding conflicts
      */
     const VAR_PREFIX = '_f2';
 
-    public function __construct(string $template, array $viewVariables)
+    public function __construct(string $template, array $globalVariables)
     {
         $this->template = $template;
-        $this->viewVariables = $viewVariables;
+        $this->globalVariables = $globalVariables;
     }
 
     public function render(string $view, array $params): Renderer
     {
         $this->currentView = $view;
-        $root = $this->getViewPath('root');
-        $pageToRender = $this->runIncludes($root);
-        $content = $this->insertVariables($pageToRender);
-        $variables = array_merge($this->viewVariables, $params);
-        $this->renderView($content, $variables);
+        $this->viewParams = $params;
+        $this->inc('root');
+//        $pageToRender = $this->runIncludes($root);
+//        $content = $this->insertVariables($pageToRender);
+//        $variables = array_merge($this->globalVariables, $params);
+//        $this->renderView($content, $variables);
         return $this;
     }
 
@@ -42,7 +44,7 @@ class Renderer
     private function runIncludes(string $filePath): string
     {
         $fileContent = file_get_contents($filePath);
-
+        eval($fileContent);
         $insertedContent = preg_replace_callback_array([
             '/(\{\{include\((?P<view>.*?)\)\}\})/' => function ($match) {
                 //runs the include
@@ -52,8 +54,23 @@ class Renderer
                 //runs the include on the main conent of the page
                 return $this->runIncludes($this->getViewPath($this->currentView));
             }
-        ], $fileContent);
+            ], $fileContent);
         return $insertedContent;
+    }
+
+    protected function includeView($file)
+    {
+        require $this->getViewPath($file);
+    }
+
+    /**
+     * Includes the view with the passed params
+     */
+    protected function inc(string $view, array $vars = array())
+    {
+        $viewPath = $this->getViewPath($view);
+        extract($vars);
+        require($viewPath);
     }
 
     private function renderView(string $_content, array $_variables): string
@@ -71,8 +88,7 @@ class Renderer
                 $var = $match['var'];
                 return '<?php echo $_f2_'.$var.'; ?>';
             }
-            ],
-            $content
+            ], $content
         );
         return $phpContent;
     }
@@ -88,5 +104,17 @@ class Renderer
     public function setExtension($extension)
     {
         $this->extension = $extension;
+    }
+
+    public function renderContent(): string
+    {
+        $this->inc(
+            $this->currentView, $this->viewParams
+        );
+    }
+
+    public function getVar(string $key): string
+    {
+        return $this->globalVariables[$key];
     }
 }

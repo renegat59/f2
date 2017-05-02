@@ -3,8 +3,6 @@
 namespace FTwo\core;
 
 use FTwo\db\DbConnection as DbConnection;
-use FTwo\http\Request as Request;
-use FTwo\http\Response as Response;
 
 /**
  * This is the main F2 class that will start the blog engine

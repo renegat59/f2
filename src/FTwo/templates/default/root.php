@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{=language}}">
+<html lang="<?php echo $this->getVar('language'); ?>">
     <head>
-        {{include(head)}}
+        <?php $this->inc('head'); ?>
     </head>
-    <body>
-        {{include(body)}}
-    </body>
-    {{include(tracking)}}
+    <?php $this->inc('body', ['title'=>'Super title']); ?>
+    <?php $this->inc('tracking'); ?>
 </html>

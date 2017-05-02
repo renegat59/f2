@@ -11,7 +11,7 @@ use \FTwo\core\F2;
  */
 class Response
 {
-    private $viewVariables = array();
+    private $variables = array();
 
     public function setStatus(int $statusCode): Response
     {
@@ -27,7 +27,7 @@ class Response
     public function render(string $view, array $params): Response
     {
         $template = F2::getConfig('params.template');
-        $renderer = new \FTwo\core\Renderer($template, $this->viewVariables);
+        $renderer = new \FTwo\core\Renderer($template, $this->variables);
         $renderer->render($view, $params);
 //        echo $this->getStatus();
         return $this;
@@ -39,9 +39,9 @@ class Response
      * @param string $value
      * @return \FTwo\http\Response
      */
-    public function addVariableToView(string $variable, string $value): Response
+    public function addVariable(string $variable, string $value): Response
     {
-        $this->viewVariables[$variable] = $value;
+        $this->variables[$variable] = $value;
         return $this;
     }
 }

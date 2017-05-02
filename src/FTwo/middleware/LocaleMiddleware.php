@@ -13,7 +13,7 @@ class LocaleMiddleware extends Middleware
     public function before(\FTwo\http\Request $request, \FTwo\http\Response $response): \FTwo\http\Response
     {
         $language = $request->get('lang');
-        $response->addVariableToView('language', $language ?? 'en');
+        $response->addVariable('language', $language ?? 'en');
         return $response;
     }
 

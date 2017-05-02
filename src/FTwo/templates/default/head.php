@@ -1,2 +1,2 @@
 <title>F2</title>
-{{include(scripts)}}
+<?php $this->inc('scripts'); ?>
