@@ -77,4 +77,11 @@ class F2
         $stack->appendMiddleware(new \FTwo\middleware\LocaleMiddleware());
         return $stack;
     }
+
+    /**
+     * @return Router
+     */
+    public static function getRouter(){
+        return self::getComponent('router');
+    }
 }

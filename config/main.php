@@ -9,6 +9,7 @@ return [
         'encoding' => 'utf8'
     ],
     'router' => [
+        'hostname'=>'http://localhost:8888',
         'routes'=> require('routes.php')
     ],
     'params' => [

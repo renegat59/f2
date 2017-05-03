@@ -18,6 +18,7 @@ class Router extends Component
     private $defaultRoutes = [
         '/' => 'main/index'
     ];
+    private $hostname;
 
     /**
      * @var Response
@@ -32,6 +33,7 @@ class Router extends Component
     public function __construct($config)
     {
         $this->routes = array_merge($this->defaultRoutes, $config['routes'] ?? []);
+        $this->hostname = $config['hostname'];
     }
 
     public function route()
@@ -83,10 +85,13 @@ class Router extends Component
 //                $getParams[$explodedParams[$key]] = $explodedParams[$key + 1] ?? '';
 //            }
 //        }
-
         return [
             '\\FTwo\\controllers\\'.ucfirst($controllerName),
             $action
         ];
+    }
+
+    public function getUrl($path) {
+        return $this->hostname.array_search($path, $this->routes);
     }
 }
