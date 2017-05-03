@@ -12,7 +12,7 @@ class Request
     private $cookies;
     private $getParams = [];
 
-    public function __construct($pathParams)
+    public function __construct($pathParams = [])
     {
         $this->cookies   = new Cookies();
         $getParams       = filter_input_array(INPUT_GET) ?? [];
@@ -48,6 +48,15 @@ class Request
     public function post(string $param)
     {
         return filter_input(INPUT_POST, $param);
+    }
+
+    /**
+     * Returns the request HTTP method
+     * @return string
+     */
+    public function method(): string
+    {
+        return $this->server('REQUEST_METHOD');
     }
 
     public function getCookies()

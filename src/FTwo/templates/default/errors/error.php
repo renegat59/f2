@@ -1,2 +1,1 @@
-<?php echo $this->getVar('errorMessage'); ?> <?php echo $code; ?>
-
+<?php echo $this->getVar('errorMessage'); ?> <?php echo $code;

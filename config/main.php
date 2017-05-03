@@ -9,7 +9,7 @@ return [
         'encoding' => 'utf8'
     ],
     'router' => [
-        'allposts' => 'posts/all'
+        'routes'=> require('routes.php')
     ],
     'params' => [
         'template'=>'default'

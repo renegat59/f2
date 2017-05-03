@@ -7,15 +7,32 @@
 
 namespace FTwo\controllers;
 
-class Posts extends \FTwo\core\BaseController
+use FTwo\core\BaseController;
+use FTwo\http\HttpMethod;
+use FTwo\http\Request;
+use FTwo\http\Response;
+
+class Posts extends BaseController
 {
 
-    public function all(\FTwo\http\Request $req, \FTwo\http\Response $res)
+    protected function init()
+    {
+        $this->addRoute(HttpMethod::GET, 'all', 'getAllPosts');
+        $this->addRoute(HttpMethod::POST, 'all', 'postAllPosts');
+        $this->addRoute(HttpMethod::GET, 'one', 'getOnePost');
+    }
+
+    protected function getAllPosts(Request $req, Response $res)
     {
         echo 'All posts';
     }
 
-    public function one(\FTwo\http\Request $req, \FTwo\http\Response $res)
+    protected function postAllPosts(Request $req, Response $res)
+    {
+        echo 'All posts posted';
+    }
+
+    protected function getOnePost(Request $req, Response $res)
     {
         $id = $req->get('id');
         echo $id;

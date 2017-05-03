@@ -1,2 +1,2 @@
 <title>F2</title>
-<?php $this->inc('scripts'); ?>
+<?php $this->inc('scripts');

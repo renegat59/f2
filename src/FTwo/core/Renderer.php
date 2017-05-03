@@ -88,7 +88,8 @@ class Renderer
                 $var = $match['var'];
                 return '<?php echo $_f2_'.$var.'; ?>';
             }
-            ], $content
+            ],
+            $content
         );
         return $phpContent;
     }
@@ -106,11 +107,9 @@ class Renderer
         $this->extension = $extension;
     }
 
-    public function renderContent(): string
+    public function renderContent()
     {
-        $this->inc(
-            $this->currentView, $this->viewParams
-        );
+        $this->inc($this->currentView, $this->viewParams);
     }
 
     public function getVar(string $key): string
