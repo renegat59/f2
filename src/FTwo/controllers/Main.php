@@ -17,7 +17,7 @@ class Main extends BaseController
 
     protected function init()
     {
-        $this->addRoute(HttpMethod::GET, 'index', 'getIndex');
+        $this->addRoute(HttpMethod::GET, '/', 'getIndex');
     }
 
     public function getIndex(Request $request, Response $response)

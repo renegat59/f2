@@ -47,14 +47,13 @@ abstract class BaseController
         $this->$method($request, $response);
     }
 
-    protected function addRoute(string $httpMethod, string $action, string $method)
+    protected function addRoute(string $httpMethod, string $path, string $method)
     {
         if (!method_exists(get_class($this), $method)) {
-            throw new F2Exception("Method <$method> configuration wrong");
+            throw new F2Exception("Path <$path> configuration wrong. Method $method does not exist");
         }
         $actionList = &$this->getMethodActions($httpMethod);
-        $actionList[$action] = $method;
-        
+        $actionList[$path] = $method;
         return $this;
     }
 

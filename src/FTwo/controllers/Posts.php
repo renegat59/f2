@@ -17,9 +17,9 @@ class Posts extends BaseController
 
     protected function init()
     {
-        $this->addRoute(HttpMethod::GET, 'all', 'getAllPosts');
-        $this->addRoute(HttpMethod::POST, 'all', 'postAllPosts');
-        $this->addRoute(HttpMethod::GET, 'one', 'getOnePost');
+        $this->addRoute(HttpMethod::GET, '/allposts', 'getAllPosts')
+            ->addRoute(HttpMethod::POST, '/allposts', 'postAllPosts')
+            ->addRoute(HttpMethod::GET, '/post', 'getOnePost');
     }
 
     protected function getAllPosts(Request $req, Response $res)

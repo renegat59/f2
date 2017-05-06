@@ -15,9 +15,7 @@ use FTwo\http\StatusCode;
 class Router extends Component
 {
     private $routes;
-    private $defaultRoutes = [
-        '/' => 'main/index'
-    ];
+
     private $hostname;
 
     /**
@@ -32,25 +30,24 @@ class Router extends Component
 
     public function __construct($config)
     {
-        $this->routes = array_merge($this->defaultRoutes, $config['routes'] ?? []);
+        $this->routes = $config['routes'];
         $this->hostname = $config['hostname'];
     }
 
     public function route()
     {
         $path = filter_input(INPUT_SERVER, 'PATH_INFO') ?? '/';
-        list($controllerName, $action) = $this->splitRoute($path);
+        $controllerName = $this->routes[$path] ?? null;
         $this->request = new Request();
         $this->response = new Response();
         $middleware = F2::getComponent('middleware');
         $this->response = $middleware->runBefore($this->request, $this->response);
-        
         if (!class_exists($controllerName)) {
             throw new HttpException(StatusCode::HTTP_NOT_FOUND, "$controllerName Not found");
         }
         (new $controllerName())
             ->call(
-                $action,
+                $path,
                 $this->request,
                 $this->response
             );
@@ -68,30 +65,8 @@ class Router extends Component
         return $this->request;
     }
 
-    /**
-     * Transforms path to array containing Controller class and function to call.
-     * @param string $path
-     * @return array Array with the first element containing name of the class to use and function to call
-     */
-    private function splitRoute(string $path): array
-    {
-        $realPath = $this->routes[$path] ?? $path;
-        list($controllerName, $action) = explode('/', ltrim($realPath, '/'), 3);
-//        $getParams = [];
-//        $explodedParams = explode('/', $params);
-//        $len = count($explodedParams);
-//        for ($key = 0; $key < $len; $key += 2) {
-//            if (!empty($explodedParams[$key])) {
-//                $getParams[$explodedParams[$key]] = $explodedParams[$key + 1] ?? '';
-//            }
-//        }
-        return [
-            '\\FTwo\\controllers\\'.ucfirst($controllerName),
-            $action
-        ];
-    }
-
     public function getUrl($path) {
         return $this->hostname.array_search($path, $this->routes);
     }
+
 }

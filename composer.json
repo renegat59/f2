@@ -13,7 +13,8 @@
         "erusev/parsedown": "^1.6"
     },
     "require-dev": {
-      "squizlabs/php_codesniffer": "2.*"
+      "squizlabs/php_codesniffer": "2.*",
+        "phpunit/phpunit": "^6.1"
     },
     "autoload": {
         "psr-4": {"FTwo\\": "src/FTwo"}

@@ -31,31 +31,7 @@ class Renderer
         $this->currentView = $view;
         $this->viewParams = $params;
         $this->inc('root');
-//        $pageToRender = $this->runIncludes($root);
-//        $content = $this->insertVariables($pageToRender);
-//        $variables = array_merge($this->globalVariables, $params);
-//        $this->renderView($content, $variables);
         return $this;
-    }
-
-    /**
-     * This function should run recursively the includes in the template and generate one string to render
-     */
-    private function runIncludes(string $filePath): string
-    {
-        $fileContent = file_get_contents($filePath);
-        eval($fileContent);
-        $insertedContent = preg_replace_callback_array([
-            '/(\{\{include\((?P<view>.*?)\)\}\})/' => function ($match) {
-                //runs the include
-                return $this->runIncludes($this->getViewPath($match['view']));
-            },
-            '/(\{\{renderContent\(\)\}\})/' => function () {
-                //runs the include on the main conent of the page
-                return $this->runIncludes($this->getViewPath($this->currentView));
-            }
-            ], $fileContent);
-        return $insertedContent;
     }
 
     protected function includeView($file)
