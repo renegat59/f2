@@ -1,4 +1,5 @@
 [![Code Climate](https://codeclimate.com/github/renegat59/f2.png)](https://codeclimate.com/github/renegat59/f2)
+[![CircleCI Status](https://circleci.com/gh/renegat59/f2.svg?style=shield)](https://circleci.com/gh/renegat59/f2) 
 
 # What is F2
 F2 is a simple blogging platform written in PHP. It's being created, because of need of super lightweight platform for having my own blog.
