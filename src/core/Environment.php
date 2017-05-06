@@ -21,7 +21,7 @@ class Environment
 
     public function isProd(): bool
     {
-        return self::DEV === $this->env;
+        return self::PROD === $this->env;
     }
 
     public function isDev(): bool
