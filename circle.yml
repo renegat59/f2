@@ -1,4 +1,4 @@
 machine:
   timezone: Europe/Madrid
   php:
-      version: 7.0.18
+      version: 7.0.17
