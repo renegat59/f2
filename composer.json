@@ -18,5 +18,8 @@
     },
     "autoload": {
         "psr-4": {"FTwo\\": "src/FTwo"}
+    },
+    "scripts": {
+        "test": "phpunit ./tests"
     }
 }
