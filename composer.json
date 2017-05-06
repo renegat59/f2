@@ -17,7 +17,7 @@
         "phpunit/phpunit": "^6.1"
     },
     "autoload": {
-        "psr-4": {"FTwo\\": "src/FTwo"}
+        "psr-4": {"FTwo\\": "src"}
     },
     "scripts": {
         "test": "phpunit ./tests"
