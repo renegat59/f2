@@ -1,5 +1,8 @@
 <?php
+
+use FTwo\core\Environment;
 return [
+    'env'=> Environment::DEV,
     'db' => [
         'host' => '127.0.0.1',
         'port' => '3307',
@@ -13,7 +16,7 @@ return [
         'routes'=> require('routes.php')
     ],
     'params' => [
-        'template'=>'default'
+        'template'=>'default',
     ],
     'middleware' => [
         

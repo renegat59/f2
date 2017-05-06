@@ -12,7 +12,7 @@ use FTwo\http\Response;
  *
  * @author Mateusz P <bananq@gmail.com>
  */
-class Main extends BaseController
+class MainController extends BaseController
 {
 
     protected function init()
@@ -24,7 +24,7 @@ class Main extends BaseController
     {
         echo 'Hello from F2!';
         $router = \FTwo\core\F2::getRouter();
-        $address = $router->getUrl('/posts/all');
+        $address = $router->getAbsoluteUrl('/allposts');
         echo "All posts address is $address";
     }
 }

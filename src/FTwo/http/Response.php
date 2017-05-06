@@ -13,6 +13,8 @@ class Response
 {
     private $variables = array();
 
+    public $exception;
+
     public function setStatus(int $statusCode): Response
     {
         http_response_code($statusCode);
@@ -29,7 +31,6 @@ class Response
         $template = F2::getConfig('params.template');
         $renderer = new \FTwo\core\Renderer($template, $this->variables);
         $renderer->render($view, $params);
-//        echo $this->getStatus();
         return $this;
     }
 
@@ -43,5 +44,15 @@ class Response
     {
         $this->variables[$variable] = $value;
         return $this;
+    }
+
+    /**
+     * Gets the variable that was stored in response
+     * @param string $variable Name of the variable
+     * @return mixed Variable that was previously stored in the response. If variable is not available returns null.
+     */
+    public function getVariable(string $variable)
+    {
+        return $this->variables[$variable] ?? null;
     }
 }

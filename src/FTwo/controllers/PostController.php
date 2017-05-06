@@ -12,7 +12,7 @@ use FTwo\http\HttpMethod;
 use FTwo\http\Request;
 use FTwo\http\Response;
 
-class Posts extends BaseController
+class PostController extends BaseController
 {
 
     protected function init()

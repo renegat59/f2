@@ -13,10 +13,12 @@ class F2
 {
     private static $config;
     private static $components;
+    private static $environment;
 
     public function __construct(array $config)
     {
         self::$config = $config;
+        self::$environment = new Environment($config['env'] ?? Environment::PROD);
         self::$components = new ComponentContainer();
         self::$components->init('db', new DbConnection(self::$config['db']));
         self::$components->init('router', new Router(self::$config['router']));
@@ -59,7 +61,7 @@ class F2
             $keys = explode('.', $key);
             $value = self::$config[$keys[0]];
             $keyLength = count($keys);
-            for ($ii=1; $ii < $keyLength; $ii++) {
+            for ($ii = 1; $ii < $keyLength; $ii++) {
                 if (isset($value[$keys[$ii]])) {
                     $value = $value[$keys[$ii]];
                 } else {
@@ -81,7 +83,13 @@ class F2
     /**
      * @return Router
      */
-    public static function getRouter(){
+    public static function getRouter()
+    {
         return self::getComponent('router');
+    }
+
+    public static function getEnvironment()
+    {
+        return self::$environment;
     }
 }

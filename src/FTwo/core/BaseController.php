@@ -25,9 +25,7 @@ abstract class BaseController
     /**
      * This function is needed, so when we override it in subclasses it will be called in the constructor
      */
-    protected function init()
-    {
-    }
+    protected abstract function init();
 
     /**
      * @param string $action
@@ -52,6 +50,7 @@ abstract class BaseController
         if (!method_exists(get_class($this), $method)) {
             throw new F2Exception("Path <$path> configuration wrong. Method $method does not exist");
         }
+
         $actionList = &$this->getMethodActions($httpMethod);
         $actionList[$path] = $method;
         return $this;

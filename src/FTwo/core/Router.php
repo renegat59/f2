@@ -2,6 +2,8 @@
 
 namespace FTwo\core;
 
+use FTwo\controllers\ErrorController;
+use FTwo\core\exceptions\F2Exception;
 use FTwo\core\exceptions\HttpException;
 use FTwo\http\Request;
 use FTwo\http\Response;
@@ -36,10 +38,27 @@ class Router extends Component
 
     public function route()
     {
-        $path = filter_input(INPUT_SERVER, 'PATH_INFO') ?? '/';
-        $controllerName = $this->routes[$path] ?? null;
         $this->request = new Request();
         $this->response = new Response();
+        
+        try{
+            $this->routeInternal();
+        }
+        catch(HttpException $httpException) {
+            $errorController = new ErrorController();
+            $this->response->exception = $httpException;
+            $errorController->serveHttpError($this->request, $this->response);
+        }
+        catch (Exception $exception) {
+            $errorController = new ErrorController();
+            $this->response->exception = $exception;
+            $errorController->serveOtherError($this->request, $this->response);
+        }
+    }
+
+    private function routeInternal(){
+        $path = filter_input(INPUT_SERVER, 'PATH_INFO') ?? '/';
+        $controllerName = $this->routes[$path] ?? null;
         $middleware = F2::getComponent('middleware');
         $this->response = $middleware->runBefore($this->request, $this->response);
         if (!class_exists($controllerName)) {
@@ -51,7 +70,7 @@ class Router extends Component
                 $this->request,
                 $this->response
             );
-        
+
         $this->response = $middleware->runAfter($this->request, $this->response);
     }
 
@@ -65,8 +84,8 @@ class Router extends Component
         return $this->request;
     }
 
-    public function getUrl($path) {
-        return $this->hostname.array_search($path, $this->routes);
+    public function getAbsoluteUrl($path){
+        return $this->hostname.$path;
     }
 
 }
