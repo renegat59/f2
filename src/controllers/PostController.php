@@ -24,6 +24,14 @@ class PostController extends BaseController
 
     protected function getAllPosts(Request $req, Response $res)
     {
+        $command = new \FTwo\db\DbQuery();
+        $posts = $command->select('id, title')
+            ->insertInto('test')
+            ->from('post')
+            ->where('published=:published', [':published'=>'1'])
+            ->orderBy('id desc')
+            ->execute();
+        var_dump($posts);
         echo 'All posts';
     }
 

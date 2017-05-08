@@ -18,6 +18,7 @@ class ComponentContainer
      */
     public function init(string $containerName, $object)
     {
+        $object->init();
         self::$components[$containerName] = $object;
     }
 

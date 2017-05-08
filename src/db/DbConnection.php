@@ -2,12 +2,16 @@
 
 namespace FTwo\db;
 
+use FTwo\core\Component;
+use FTwo\core\exceptions\F2Exception;
+use PDO;
+
 /**
  * Description of DbConnection
  *
  * @author mateusz
  */
-class DbConnection extends \FTwo\core\Component
+class DbConnection extends Component
 {
     private $databaseHandler;
 
@@ -20,25 +24,25 @@ class DbConnection extends \FTwo\core\Component
         $port   = $config['port'] ?? 3306;
 
         $connectionString      = "mysql:host=$host;port=$port;dbname=$dbName";
-        $this->databaseHandler = new \PDO($connectionString, $config['user'], $config['password']);
+        $this->databaseHandler = new PDO($connectionString, $config['user'], $config['password']);
     }
 
     private function validateConfig($config)
     {
         if (!isset($config['host'])) {
-            throw new \FTwo\core\exceptions\F2Exception('Database host not provided');
+            throw new F2Exception('Database host not provided');
         }
 
         if (!isset($config['user'])) {
-            throw new \FTwo\core\exceptions\F2Exception('Database user not provided');
+            throw new F2Exception('Database user not provided');
         }
 
         if (!isset($config['password'])) {
-            throw new \FTwo\core\exceptions\F2Exception('Database password not provided');
+            throw new F2Exception('Database password not provided');
         }
 
         if (!isset($config['schema'])) {
-            throw new \FTwo\core\exceptions\F2Exception('Database schema not provided');
+            throw new F2Exception('Database schema not provided');
         }
     }
 }

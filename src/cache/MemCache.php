@@ -2,12 +2,14 @@
 
 namespace FTwo\cache;
 
+use FTwo\core\Component;
+
 /**
  * Memcache implementation of Cache
  *
  * @author Mateusz P <bananq@gmail.com>
  */
-class MemCache implements Cache
+class MemCache extends Component implements Cache
 {
     //put your code here
     public function addObject(string $key, mixed $value): bool
