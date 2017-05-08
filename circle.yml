@@ -1,4 +1,9 @@
 machine:
   timezone: Europe/Madrid
   php:
-      version: 7.0.17
+    version: 7.0.17
+test:
+  override:
+    - ./vendor/bin/phpunit --coverage-clover=coverage.xml ./tests 
+  post:
+    - bash <(curl -s https://codecov.io/bash)
