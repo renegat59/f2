@@ -2,6 +2,10 @@
 
 namespace FTwo\core;
 
+use FTwo\http\Request;
+use FTwo\http\Response;
+use FTwo\middleware\Middleware;
+
 /**
  * Class running the middleware on every request
  *
@@ -16,7 +20,7 @@ class MiddlewareStack extends Component
         $middlewarePath = F2::getPath('middleware');
     }
 
-    public function runBefore(\FTwo\http\Request $request, \FTwo\http\Response $response): \FTwo\http\Response
+    public function runBefore(Request $request, Response $response): Response
     {
         $count = count($this->stack);
         for ($ii = 0; $ii < $count; $ii++) {
@@ -25,7 +29,7 @@ class MiddlewareStack extends Component
         return $response;
     }
 
-    public function runAfter(\FTwo\http\Request $request, \FTwo\http\Response $response): \FTwo\http\Response
+    public function runAfter(Request $request, Response $response): Response
     {
         $count = count($this->stack);
         for ($ii = $count - 1; $ii >= 0; $ii--) {

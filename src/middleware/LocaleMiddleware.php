@@ -2,6 +2,9 @@
 
 namespace FTwo\middleware;
 
+use FTwo\http\Request;
+use FTwo\http\Response;
+
 /**
  * Sets the proper Locale for the website.
  *
@@ -10,14 +13,14 @@ namespace FTwo\middleware;
 class LocaleMiddleware extends Middleware
 {
 
-    public function before(\FTwo\http\Request $request, \FTwo\http\Response $response): \FTwo\http\Response
+    public function before(Request $request, Response $response): Response
     {
         $language = $request->get('lang');
         $response->addVariable('language', $language ?? 'en');
         return $response;
     }
 
-    public function after(\FTwo\http\Request $request, \FTwo\http\Response $response): \FTwo\http\Response
+    public function after(Request $request, Response $response): Response
     {
         return $response;
     }
