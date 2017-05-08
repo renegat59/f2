@@ -3,8 +3,10 @@
 namespace FTwo\controllers;
 
 use FTwo\core\BaseController;
+use FTwo\core\F2;
 use FTwo\http\Request;
 use FTwo\http\Response;
+use FTwo\http\StatusCode;
 
 /**
  * Error controller
@@ -37,7 +39,9 @@ class ErrorController extends BaseController
     {
         $exception = $response->exception;
         if (F2::getEnvironment()->isDev()) {
-            var_dump($exception->getTrace());
+            echo $exception->getMessage();
+            echo "\r\n--------\r\n";
+            echo $exception->getTraceAsString();
             throw $exception;
         } else {
             $errorCode = $exception->getCode();
@@ -45,9 +49,14 @@ class ErrorController extends BaseController
             $response->setStatus($errorCode)
                 ->render('errors/error',
                     [
-                    'code' => \FTwo\http\StatusCode::HTTP_INTERNAL_SERVER_ERROR,
+                    'code' => StatusCode::HTTP_INTERNAL_SERVER_ERROR,
                     'errorMessage' => $exception->getMessage()
             ]);
         }
+    }
+
+    private function printStackTrace()
+    {
+
     }
 }

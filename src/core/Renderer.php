@@ -49,27 +49,6 @@ class Renderer
         require($viewPath);
     }
 
-    private function renderView(string $_content, array $_variables): string
-    {
-        extract($_variables, EXTR_PREFIX_ALL, self::VAR_PREFIX);
-        eval("?>$_content");
-    }
-
-    private function insertVariables(string $content): string
-    {
-        $phpContent = preg_replace_callback_array(
-            [
-            '/(\{\{=(?P<var>.*?)\}\})/' => function ($match) {
-                //replaces simple variable:
-                $var = $match['var'];
-                return '<?php echo $_f2_'.$var.'; ?>';
-            }
-            ],
-            $content
-        );
-        return $phpContent;
-    }
-
     private function getViewPath($view): string
     {
         return F2::getPath('templates'.

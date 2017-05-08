@@ -2,4 +2,3 @@
 <?php
 
 $this->inc('scripts');
-echo date('Y-m-d');

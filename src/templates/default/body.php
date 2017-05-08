@@ -1,3 +1,3 @@
 <body>
-<?php $this->renderContent(); ?>
+    <?php $this->renderContent(); ?>
 </body>

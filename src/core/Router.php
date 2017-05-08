@@ -3,7 +3,6 @@
 namespace FTwo\core;
 
 use FTwo\controllers\ErrorController;
-use FTwo\core\exceptions\F2Exception;
 use FTwo\core\exceptions\HttpException;
 use FTwo\http\Request;
 use FTwo\http\Response;
@@ -49,7 +48,7 @@ class Router extends Component
             $this->response->exception = $httpException;
             $errorController->serveHttpError($this->request, $this->response);
         }
-        catch (Exception $exception) {
+        catch (\Exception $exception) {
             $errorController = new ErrorController();
             $this->response->exception = $exception;
             $errorController->serveOtherError($this->request, $this->response);

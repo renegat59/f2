@@ -44,7 +44,7 @@ class F2
     public static function getPath($folder)
     {
         $currentPath = getcwd();
-        return $currentPath.DIRECTORY_SEPARATOR.'src'.DIRECTORY_SEPARATOR.'FTwo'.DIRECTORY_SEPARATOR.$folder;
+        return $currentPath.DIRECTORY_SEPARATOR.'src'.DIRECTORY_SEPARATOR.$folder;
     }
 
     /**
