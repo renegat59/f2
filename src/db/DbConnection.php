@@ -27,6 +27,26 @@ class DbConnection extends Component
         $this->databaseHandler = new PDO($connectionString, $config['user'], $config['password']);
     }
 
+    public function select(string $fields): SelectQuery
+    {
+        return (new SelectQuery($this))->select($fields);
+    }
+
+    public function insertInto(string $table): InsertQuery
+    {
+        return (new InsertQuery($this))->insertInto($table);
+    }
+
+    public function update(string $table): UpdateQuery
+    {
+        return (new UpdateQuery($this))->update($table);
+    }
+
+    public function delete(string $table): DeleteQuery
+    {
+        return (new DeleteQuery($this))->delete($table);
+    }
+
     private function validateConfig($config)
     {
         if (!isset($config['host'])) {

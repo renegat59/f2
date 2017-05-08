@@ -2,7 +2,7 @@
 
 namespace FTwo\core;
 
-use FTwo\db\DbConnection as DbConnection;
+use FTwo\db\DbConnection;
 
 /**
  * This is the main F2 class that will start the blog engine
@@ -31,9 +31,13 @@ class F2
         $router->route();
     }
 
-    public static function db(): DbConnection
+    /**
+     * Gets the current DB Connection
+     * @return DbConnection current db connection
+     */
+    public static function getDb(): DbConnection
     {
-        return self::$components->get('db');
+        return self::getComponent('db');
     }
 
     public static function getComponent($componentName): Component
@@ -83,7 +87,7 @@ class F2
     /**
      * @return Router
      */
-    public static function getRouter()
+    public static function getRouter(): Router
     {
         return self::getComponent('router');
     }

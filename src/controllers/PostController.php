@@ -8,6 +8,8 @@
 namespace FTwo\controllers;
 
 use FTwo\core\BaseController;
+use FTwo\core\F2;
+use FTwo\db\DbQuery;
 use FTwo\http\HttpMethod;
 use FTwo\http\Request;
 use FTwo\http\Response;
@@ -24,9 +26,18 @@ class PostController extends BaseController
 
     protected function getAllPosts(Request $req, Response $res)
     {
-        $command = new \FTwo\db\DbQuery();
+        $dbConnection = F2::getDb();
+        $posts = $dbConnection->select('id, title')
+            ->from('post')
+            ->getQuery();
+//            ->where('published=:published', [':published'=>'1'])
+//            ->orderBy('id desc')
+//            ->getQuery();
+
+        var_dump($posts);
+
+        $command = new DbQuery();
         $posts = $command->select('id, title')
-            ->insertInto('test')
             ->from('post')
             ->where('published=:published', [':published'=>'1'])
             ->orderBy('id desc')
