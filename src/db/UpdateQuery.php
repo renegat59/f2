@@ -9,6 +9,7 @@ namespace FTwo\db;
  */
 class UpdateQuery extends Query
 {
+
     public function update($table): Query
     {
         return $this;
@@ -17,5 +18,10 @@ class UpdateQuery extends Query
     protected function buildQuery()
     {
 
+    }
+
+    public function set(array $values): Query
+    {
+        return $this;
     }
 }

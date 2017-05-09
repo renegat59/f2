@@ -25,6 +25,11 @@ class SelectQuery extends Query
 
     protected function buildQuery()
     {
-        return 'SELECT '.$this->fields.' FROM '.$this->table;
+        $query = 'SELECT '.$this->fields.' FROM '.$this->table.' ';
+        $query .= $this->buildWhereClause();
+        $query .= $this->buildGroupBy();
+        $query .= $this->buildOrderBy();
+        $query .= $this->buildLimit();
+        return trim($query).';';
     }
 }
