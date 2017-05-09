@@ -21,6 +21,9 @@ class SelectQueryTest extends TestCase
         $this->selectQuery = new FTwo\db\SelectQuery(null);
     }
 
+    /**
+     * @covers FTwo\db\SelectQuery::select()
+     */
     public function testSelect()
     {
         $select = $this->selectQuery->select('field1, field2');
@@ -30,6 +33,9 @@ class SelectQueryTest extends TestCase
         $this->assertEquals('SELECT field3 FROM;', $select->getQuery());
     }
 
+    /**
+     * @covers FTwo\db\SelectQuery::from()
+     */
     public function testFrom()
     {
         $select = $this->selectQuery->select('field1, field2')->from('table1');
@@ -39,6 +45,9 @@ class SelectQueryTest extends TestCase
         $this->assertEquals('SELECT field1, field2 FROM table2;', $select->getQuery());
     }
 
+    /**
+     * @covers FTwo\db\SelectQuery::getQuery()
+     */
     public function testGetQuery()
     {
         $query = $this->selectQuery
