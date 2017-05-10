@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 class EnvironmentTest extends TestCase
 {
     /**
-     * @covers Environment::isDev()
+     * @covers FTwo\core\Environment::isDev
      */
     public function testIsDev()
     {
@@ -22,7 +22,7 @@ class EnvironmentTest extends TestCase
     }
 
     /**
-     * @covers Environment::isProd()
+     * @covers FTwo\core\Environment::isProd()
      */
     public function testIsProd()
     {
