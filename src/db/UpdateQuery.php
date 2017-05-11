@@ -20,7 +20,7 @@ class UpdateQuery extends Query
     protected function buildQuery()
     {
         $query = 'UPDATE '.$this->table.' ';
-        $query .= 'SET '.$this->buildValues();
+        $query .= 'SET '. $this->buildValues();
         return trim($query).';';
     }
 
