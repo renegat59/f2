@@ -26,6 +26,7 @@ class InsertQueryTest extends TestCase
 
     /**
      * @covers FTwo\db\InsertQuery::insertInto()
+     * @covers FTwo\db\InsertQuery::buildQuery()
      */
     public function testInsertInto()
     {
@@ -38,6 +39,7 @@ class InsertQueryTest extends TestCase
     /**
      * @covers FTwo\db\InsertQuery::insertInto()
      * @covers FTwo\db\InsertQuery::values()
+     * @covers FTwo\db\InsertQuery::buildQuery()
      */
     public function testInsertIntoWithParams()
     {

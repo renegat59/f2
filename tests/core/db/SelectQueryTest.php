@@ -23,6 +23,7 @@ class SelectQueryTest extends TestCase
 
     /**
      * @covers FTwo\db\SelectQuery::select()
+     * @covers FTwo\db\SelectQuery::buildQuery()
      */
     public function testSelect()
     {
@@ -34,6 +35,7 @@ class SelectQueryTest extends TestCase
 
     /**
      * @covers FTwo\db\SelectQuery::from()
+     * @covers FTwo\db\SelectQuery::buildQuery()
      */
     public function testFrom()
     {
@@ -49,6 +51,7 @@ class SelectQueryTest extends TestCase
      * @covers FTwo\db\Query::limit()
      * @covers FTwo\db\Query::groupBy()
      * @covers FTwo\db\Query::orderBy()
+     * @covers FTwo\db\SelectQuery::buildQuery()
      */
     public function testGetQuery()
     {
