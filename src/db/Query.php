@@ -79,11 +79,6 @@ abstract class Query
         return $this;
     }
 
-    public function values(array $table): Query
-    {
-        return $this;
-    }
-
     public function join(string $joinType): Query
     {
         return $this;

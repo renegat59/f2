@@ -12,7 +12,10 @@
     verbose="true">
     <testsuites>
         <testsuite name="all">
-            <directory>tests/*</directory>
+            <directory>tests/</directory>
+        </testsuite>
+        <testsuite name="core.db">
+            <directory>tests/core/db/</directory>
         </testsuite>
     </testsuites>
     <filter>
