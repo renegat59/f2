@@ -9,13 +9,24 @@ namespace FTwo\db;
  */
 class DeleteQuery extends Query
 {
+
     public function delete(string $fromTable): Query
     {
         return $this;
     }
 
+    public function from(string $table): Query
+    {
+        $this->table = $table;
+        return $this;
+    }
+
     protected function buildQuery()
     {
-
+        $query = 'DELETE FROM '.$this->table.' ';
+        $query .= $this->buildWhereClause();
+        $query .= $this->buildOrderBy();
+        $query .= $this->buildLimit();
+        return trim($query).';';
     }
 }
