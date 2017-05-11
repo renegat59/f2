@@ -18,7 +18,6 @@ class ErrorController extends BaseController
 
     protected function init()
     {
-
     }
 
     public function serveHttpError(Request $request, Response $response)
@@ -27,11 +26,13 @@ class ErrorController extends BaseController
         if (null !== $exception) {
             $errorCode = $exception->getCode();
             $response->setStatus($errorCode)
-                ->render('errors/error',
+                ->render(
+                    'errors/error',
                     [
-                    'code' => $errorCode,
-                    'errorMessage' => $exception->getMessage()
-            ]);
+                        'code' => $errorCode,
+                        'errorMessage' => $exception->getMessage()
+                    ]
+                );
         }
     }
 
@@ -47,16 +48,17 @@ class ErrorController extends BaseController
             $errorCode = $exception->getCode();
             //TODO: we have to log here
             $response->setStatus($errorCode)
-                ->render('errors/error',
+                ->render(
+                    'errors/error',
                     [
-                    'code' => StatusCode::HTTP_INTERNAL_SERVER_ERROR,
-                    'errorMessage' => $exception->getMessage()
-            ]);
+                        'code' => StatusCode::HTTP_INTERNAL_SERVER_ERROR,
+                        'errorMessage' => $exception->getMessage()
+                    ]
+                );
         }
     }
 
     private function printStackTrace()
     {
-
     }
 }

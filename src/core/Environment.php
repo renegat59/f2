@@ -28,5 +28,4 @@ class Environment
     {
         return self::DEV === $this->env;
     }
-
 }

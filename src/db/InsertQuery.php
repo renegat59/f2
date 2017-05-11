@@ -39,9 +39,12 @@ class InsertQuery extends Query
     private function buildValues()
     {
         $fields = array_keys($this->values);
-        $values = array_map(function($value) {
-            return ':'.$value;
-        }, $fields);
+        $values = array_map(
+            function ($value) {
+                return ':'.$value;
+            },
+            $fields
+        );
         return '('.implode(', ', $fields).') VALUES ('.implode(', ', $values).')';
     }
 }

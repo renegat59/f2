@@ -16,7 +16,6 @@ use FTwo\http\StatusCode;
 class Router extends Component
 {
     private $routes;
-
     private $hostname;
 
     /**
@@ -39,23 +38,22 @@ class Router extends Component
     {
         $this->request = new Request();
         $this->response = new Response();
-        
-        try{
+
+        try {
             $this->routeInternal();
-        }
-        catch(HttpException $httpException) {
+        } catch (HttpException $httpException) {
             $errorController = new ErrorController();
             $this->response->exception = $httpException;
             $errorController->serveHttpError($this->request, $this->response);
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             $errorController = new ErrorController();
             $this->response->exception = $exception;
             $errorController->serveOtherError($this->request, $this->response);
         }
     }
 
-    private function routeInternal(){
+    private function routeInternal()
+    {
         $path = filter_input(INPUT_SERVER, 'PATH_INFO') ?? '/';
         $controllerName = $this->routes[$path] ?? null;
         $middleware = F2::getComponent('middleware');
@@ -63,12 +61,7 @@ class Router extends Component
         if (!class_exists($controllerName)) {
             throw new HttpException(StatusCode::HTTP_NOT_FOUND, "$controllerName Not found");
         }
-        (new $controllerName())
-            ->call(
-                $path,
-                $this->request,
-                $this->response
-            );
+        (new $controllerName())->call($path, $this->request, $this->response);
 
         $this->response = $middleware->runAfter($this->request, $this->response);
     }
@@ -83,8 +76,8 @@ class Router extends Component
         return $this->request;
     }
 
-    public function getAbsoluteUrl($path){
+    public function getAbsoluteUrl($path)
+    {
         return $this->hostname.$path;
     }
-
 }

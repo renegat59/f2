@@ -35,9 +35,14 @@ class UpdateQuery extends Query
 
     private function buildSetValues()
     {
-        return 'SET '.implode(', ',
-                array_map(function($field) {
+        return 'SET '.implode(
+            ', ',
+            array_map(
+                function ($field) {
                     return $field.'=:'.$field;
-                }, array_keys($this->values))).' ';
+                },
+                array_keys($this->values)
+            )
+        ).' ';
     }
 }

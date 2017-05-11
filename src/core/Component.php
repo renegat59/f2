@@ -8,7 +8,7 @@ namespace FTwo\core;
  */
 class Component
 {
-    public function init(){
-        
+    public function init()
+    {
     }
 }

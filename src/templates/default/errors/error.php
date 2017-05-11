@@ -1,2 +1,1 @@
-<?php echo $errorMessage; ?>
- <?php echo $code;
+<?php echo $errorMessage; ?> <?php echo $code;

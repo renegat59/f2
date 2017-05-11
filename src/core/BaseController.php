@@ -25,7 +25,7 @@ abstract class BaseController
     /**
      * This function is needed, so when we override it in subclasses it will be called in the constructor
      */
-    protected abstract function init();
+    abstract protected function init();
 
     /**
      * @param string $action

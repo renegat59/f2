@@ -19,5 +19,4 @@ class HttpMethod
     const PUT = 'PUT';
     const PATCH = 'PATCH';
     const DELETE = 'DELETE';
-
 }

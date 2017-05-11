@@ -29,7 +29,7 @@ abstract class Query
         $this->dbConnection = $dbConnection;
     }
 
-    public function where(string $condition, array $params=array()): Query
+    public function where(string $condition, array $params = array()): Query
     {
         $this->whereClause = $condition;
         $this->params = $params;
@@ -55,7 +55,7 @@ abstract class Query
         if (!empty($this->where)) {
             throw new \FTwo\core\exceptions\F2Exception('where() not called before');
         }
-        if(!empty($whereClause)) {
+        if (!empty($whereClause)) {
             $this->whereClause = '('.$this->whereClause.') '.$operator.' '.$whereClause;
         }
         return $this;
@@ -76,16 +76,6 @@ abstract class Query
     public function limit(string $limit): Query
     {
         $this->limit = $limit;
-        return $this;
-    }
-
-    public function join(string $joinType): Query
-    {
-        return $this;
-    }
-
-    public function on(string $onCondition): Query
-    {
         return $this;
     }
 
@@ -122,7 +112,6 @@ abstract class Query
 
     public function executeAs(string $className)
     {
-        
     }
 
     /**
@@ -137,29 +126,33 @@ abstract class Query
         return $result[0] ?? null;
     }
 
-    protected function buildWhereClause(){
-        if(!empty($this->whereClause)){
+    protected function buildWhereClause()
+    {
+        if (!empty($this->whereClause)) {
             return 'WHERE '.$this->whereClause.' ';
         }
         return '';
     }
 
-    protected function buildOrderBy(){
-        if(!empty($this->orderBy)){
+    protected function buildOrderBy()
+    {
+        if (!empty($this->orderBy)) {
             return 'ORDER BY '.$this->orderBy.' ';
         }
         return '';
     }
 
-    protected function buildLimit(){
-        if(!empty($this->limit)){
+    protected function buildLimit()
+    {
+        if (!empty($this->limit)) {
             return 'LIMIT '.$this->limit.' ';
         }
         return '';
     }
 
-    protected function buildGroupBy(){
-        if(!empty($this->groupBy)){
+    protected function buildGroupBy()
+    {
+        if (!empty($this->groupBy)) {
             return 'GROUP BY '.$this->groupBy.' ';
         }
         return '';

@@ -48,7 +48,10 @@ class SelectQueryTest extends TestCase
             ->limit(3)
             ->groupBy('field2')
             ->getQuery();
-        $this->assertEquals('SELECT field1, field2 FROM table1 WHERE a=b GROUP BY field2 ORDER BY field3 LIMIT 3;', $query);
+        $this->assertEquals(
+            'SELECT field1, field2 FROM table1 WHERE a=b GROUP BY field2 ORDER BY field3 LIMIT 3;',
+            $query
+        );
     }
 
     public function testGetQueryWithParams()
@@ -61,6 +64,26 @@ class SelectQueryTest extends TestCase
             ->limit(3)
             ->groupBy('field2')
             ->getQuery();
-        $this->assertEquals('SELECT field1, field2 FROM table1 WHERE a=:a GROUP BY field2 ORDER BY field3 LIMIT 3;', $query);
+        $this->assertEquals(
+            'SELECT field1, field2 FROM table1 WHERE a=:a GROUP BY field2 ORDER BY field3 LIMIT 3;',
+            $query
+        );
+    }
+
+    public function testSelectJoins()
+    {
+        $query = $this->selectQuery
+            ->select('field1, field2')
+            ->from('table1 t1')
+            ->leftJoin('table2 t2 ON t1.id=t2.t_id')
+            ->rightJoin('table3 t3 ON t1.id=t3.t_id')
+            ->where('a=:a', [':a'=>1])
+            ->orderBy('field3')
+            ->getQuery();
+        $this->assertEquals(
+            'SELECT field1, field2 FROM table1 t1 LEFT JOIN table2 t2 ON t1.id=t2.t_id '
+            . 'RIGHT JOIN table3 t3 ON t1.id=t3.t_id WHERE a=:a ORDER BY field3;',
+            $query
+        );
     }
 }

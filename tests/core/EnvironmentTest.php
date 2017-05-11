@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
  */
 class EnvironmentTest extends TestCase
 {
+
     /**
      * @covers FTwo\core\Environment::isDev()
      */
@@ -31,6 +32,4 @@ class EnvironmentTest extends TestCase
         $environment = new Environment(Environment::PROD);
         $this->assertTrue($environment->isProd());
     }
-
 }
-
