@@ -45,4 +45,9 @@ class UpdateQueryTest extends TestCase
         $this->updateQuery->set(['field1'=>1, 'field2'=>'value2']);
         $this->assertEquals('UPDATE table1 SET field1=:field1, field2=:field2;',$this->updateQuery->getQuery());
     }
+
+    public function testSetWithParams()
+    {
+        
+    }
 }
