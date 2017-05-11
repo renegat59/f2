@@ -24,10 +24,6 @@ class InsertQueryTest extends TestCase
         $this->insertQuery = new FTwo\db\InsertQuery(null);
     }
 
-    /**
-     * @covers FTwo\db\InsertQuery::insertInto()
-     * @covers FTwo\db\InsertQuery::buildQuery()
-     */
     public function testInsertInto()
     {
         $this->assertNotNull($this->insertQuery->insertInto('table1')->values(['a' => 1]));
@@ -36,11 +32,6 @@ class InsertQueryTest extends TestCase
         );
     }
 
-    /**
-     * @covers FTwo\db\InsertQuery::insertInto()
-     * @covers FTwo\db\InsertQuery::values()
-     * @covers FTwo\db\InsertQuery::buildQuery()
-     */
     public function testInsertIntoWithParams()
     {
         $query = $this->insertQuery->insertInto('table1')

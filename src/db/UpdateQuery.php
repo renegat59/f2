@@ -20,7 +20,10 @@ class UpdateQuery extends Query
     protected function buildQuery()
     {
         $query = 'UPDATE '.$this->table.' ';
-        $query .= 'SET '. $this->buildValues();
+        $query .= $this->buildSetValues();
+        $query .= $this->buildWhereClause();
+        $query .= $this->buildOrderBy();
+        $query .= $this->buildLimit();
         return trim($query).';';
     }
 
@@ -30,11 +33,11 @@ class UpdateQuery extends Query
         return $this;
     }
 
-    private function buildValues()
+    private function buildSetValues()
     {
-        return implode(', ',
-            array_map(function($field) {
-                return $field.'=:'.$field;
-            }, array_keys($this->values)));
+        return 'SET '.implode(', ',
+                array_map(function($field) {
+                    return $field.'=:'.$field;
+                }, array_keys($this->values))).' ';
     }
 }

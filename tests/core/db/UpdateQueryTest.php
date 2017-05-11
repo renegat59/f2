@@ -24,9 +24,6 @@ class UpdateQueryTest extends TestCase
         $this->updateQuery = new UpdateQuery(null);
     }
 
-    /**
-     * @covers \FTwo\db\UpdateQuery::update()
-     */
     public function testUpdate()
     {
         $this->assertNotNull($this->updateQuery->update('table1'));
@@ -36,9 +33,6 @@ class UpdateQueryTest extends TestCase
         $this->assertEquals('UPDATE table2 SET a=:a;',$this->updateQuery->getQuery());
     }
 
-    /**
-     * @covers \FTwo\db\UpdateQuery::set()
-     */
     public function testSet()
     {
         $this->assertNotNull($this->updateQuery->update('table1'));
@@ -48,6 +42,13 @@ class UpdateQueryTest extends TestCase
 
     public function testSetWithParams()
     {
-        
+        $query = $this->updateQuery->update('table1')
+            ->set(['field1'=>1, 'field2'=>'value2'])
+            ->where('a=:a', [':a'=>1])
+            ->orderBy('field1')
+            ->limit(1)
+            ->getQuery();
+        $this->assertEquals('UPDATE table1 SET field1=:field1, field2=:field2 WHERE a=:a ORDER BY field1 LIMIT 1;', $query);
+
     }
 }
