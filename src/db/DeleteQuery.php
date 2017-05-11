@@ -10,11 +10,6 @@ namespace FTwo\db;
 class DeleteQuery extends Query
 {
 
-    public function delete(string $fromTable): Query
-    {
-        return $this;
-    }
-
     public function from(string $table): Query
     {
         $this->table = $table;
