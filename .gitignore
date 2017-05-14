@@ -1,7 +1,7 @@
-./vendor/*
-./nbproject
-./nbproject/private/
-./cache
-./cache/*
+/vendor/*
+/nbproject
+/nbproject/private/
+/cache
+/cache/*
 /build
-./build/*
+/build/*
