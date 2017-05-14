@@ -21,6 +21,7 @@ return [
             'port' => 11211
         ]
     ],
+    'webcache' => [],
     'router' => [
         'hostname' => 'http://localhost:8888',
         'routes' => require('routes.php')

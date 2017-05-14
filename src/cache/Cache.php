@@ -29,14 +29,33 @@ abstract class Cache extends Component
 
     abstract public function get(string $key): mixed;
 
-    public function cacheAndGet(string $key, callable $creator)
+    public function getOrCache(string $key, callable $creator)
     {
         $value = $this->get($key);
         if (FALSE === $value) {
             $value = $creator();
-            $this->addString($key, $value);
+            $this->addString($key, $this->serialize($value));
         }
+        return $value;
     }
 
-    protected function
+    /**
+     * We wrap serialize with our function, so we can add something in future if needed
+     * @param mixed $value
+     * @return string serialized object
+     */
+    protected function serialize($value): string
+    {
+        return serialize($value);
+    }
+
+    /**
+     * We wrap unserialize with our function, so we can add something in future if needed
+     * @param string $value
+     * @return mixed
+     */
+    protected function unserialize(string $value)
+    {
+        return unserialize($value);
+    }
 }

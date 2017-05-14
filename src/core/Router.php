@@ -54,7 +54,8 @@ class Router extends Component
 
     private function routeInternal()
     {
-        $path = filter_input(INPUT_SERVER, 'PATH_INFO') ?? '/';
+        $path = $this->request->server('PATH_INFO') ?? '/';
+        //old way: filter_input(INPUT_SERVER, 'PATH_INFO') ?? '/';
         $controllerName = $this->routes[$path] ?? null;
         $middleware = F2::getComponent('middleware');
         $this->response = $middleware->runBefore($this->request, $this->response);

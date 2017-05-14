@@ -11,7 +11,7 @@ use \FTwo\core\F2;
  */
 class Response
 {
-    private $variables = array();
+    private $variables = [];
 
     public $exception;
 
@@ -26,12 +26,25 @@ class Response
         return http_response_code();
     }
 
+    public function addHeader(string $header): Response
+    {
+        header($header);
+        return $this;
+    }
+
     public function render(string $view, array $params): Response
     {
         $template = F2::getConfig('params.template');
         $renderer = new \FTwo\core\Renderer($template, $this->variables);
         $renderer->render($view, $params);
         return $this;
+    }
+
+    public function send(string $content, string $contentType): Response
+    {
+        $this->addHeader('Content-Type: '.$contentType);
+        echo $content;
+        exit();
     }
 
     /**

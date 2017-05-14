@@ -3,6 +3,7 @@
 namespace FTwo\core;
 
 use FTwo\db\DbConnection;
+use FTwo\cache\WebCache;
 
 /**
  * This is the main F2 class that will start the blog engine
@@ -23,6 +24,9 @@ class F2
         self::$components->init('db', new DbConnection(self::$config['db']));
         self::$components->init('router', new Router(self::$config['router']));
         self::$components->init('middleware', $this->generateMiddleware(self::$config['middleware']));
+        if(isset(self::$config['webcache'])) {
+            self::$components->init('webcache', new WebCache(self::$config['webcache']));
+        }
     }
 
     public function start()
