@@ -1,4 +1,7 @@
 vendor/*
 nbproject
-build
 /nbproject/private/
+cache
+cache/*
+build
+build/*
