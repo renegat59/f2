@@ -10,6 +10,7 @@ namespace FTwo\db;
 class SelectQuery extends Query
 {
     private $fields;
+    private $havingCondition;
     private $joins = [];
 
     public function select(string $fields): SelectQuery
@@ -22,6 +23,12 @@ class SelectQuery extends Query
     {
         $this->table = $table;
         return $this;
+    }
+
+    public function having(string $condition, array $params): Query
+    {
+        $this->havingCondition = $condition;
+        return $this->addParams($params);
     }
 
     public function join(string $joinTable): Query
@@ -58,6 +65,7 @@ class SelectQuery extends Query
         $query .= $this->buildJoins();
         $query .= $this->buildWhereClause();
         $query .= $this->buildGroupBy();
+        $query .= $this->buildHaving();
         $query .= $this->buildOrderBy();
         $query .= $this->buildLimit();
         return trim($query).';';
@@ -67,6 +75,14 @@ class SelectQuery extends Query
     {
         if (!empty($this->joins)) {
             return implode(' ', $this->joins).' ';
+        }
+        return '';
+    }
+
+    private function buildHaving(): string
+    {
+        if(!empty($this->havingCondition)) {
+            return 'HAVING '.$this->havingCondition.' ';
         }
         return '';
     }

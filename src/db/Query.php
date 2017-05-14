@@ -12,7 +12,7 @@ abstract class Query
     protected $dbConnection;
     protected $table;
     protected $whereClause;
-    protected $params;
+    protected $params = [];
     protected $orderBy;
     protected $groupBy;
     protected $limit;
@@ -29,25 +29,22 @@ abstract class Query
         $this->dbConnection = $dbConnection;
     }
 
-    public function where(string $condition, array $params = array()): Query
+    public function where(string $condition, array $params = []): Query
     {
         $this->whereClause = $condition;
-        $this->params = $params;
-        return $this;
+        return $this->addParams($params);
     }
 
-    public function andWhere(string $condition, array $params): Query
+    public function andWhere(string $condition, array $params = []): Query
     {
-        $this->addWhere($condition, 'AND');
-        $this->params = array_merge($this->params, $params);
-        return $this;
+        return $this->addWhere($condition, 'AND')
+            ->addParams($params);
     }
 
-    public function orWhere(string $condition, array $params): Query
+    public function orWhere(string $condition, array $params = []): Query
     {
-        $this->addWhere($condition, 'OR');
-        $this->params = array_merge($this->params, $params);
-        return $this;
+        return $this->addWhere($condition, 'OR')
+            ->addParams($params);
     }
 
     private function addWhere(string $whereClause, string $operator)
@@ -76,11 +73,6 @@ abstract class Query
     public function limit(string $limit): Query
     {
         $this->limit = $limit;
-        return $this;
-    }
-
-    public function having(string $condition): Query
-    {
         return $this;
     }
 
@@ -156,5 +148,11 @@ abstract class Query
             return 'GROUP BY '.$this->groupBy.' ';
         }
         return '';
+    }
+
+    protected function addParams(array $params): Query
+    {
+        $this->params = array_merge($this->params, $params);
+        return $this;
     }
 }

@@ -38,7 +38,7 @@ class SelectQueryTest extends TestCase
         $this->assertEquals('SELECT field1, field2 FROM table2;', $this->selectQuery->getQuery());
     }
 
-    public function testGetQuery()
+    public function testGetQueryOrderByAndLimit()
     {
         $query = $this->selectQuery
             ->select('field1, field2')
@@ -68,6 +68,17 @@ class SelectQueryTest extends TestCase
             'SELECT field1, field2 FROM table1 WHERE a=:a GROUP BY field2 ORDER BY field3 LIMIT 3;',
             $query
         );
+    }
+
+    public function testGroupByHaving()
+    {
+        $query = $this->selectQuery
+            ->select('count(field1)')
+            ->from('table1')
+            ->groupBy('field2')
+            ->having('field2>:val1', [':val1'=>0])
+            ->getQuery();
+        $this->assertEquals('SELECT count(field1) FROM table1 GROUP BY field2 HAVING field2>:val1;', $query);
     }
 
     public function testSelectJoins()
