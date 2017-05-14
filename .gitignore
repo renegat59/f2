@@ -3,5 +3,5 @@
 ./nbproject/private/
 ./cache
 ./cache/*
-./build
+/build
 ./build/*
