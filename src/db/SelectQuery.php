@@ -60,7 +60,8 @@ class SelectQuery extends Query
     public function execute(): array
     {
         $pdoStatement = $this->dbConnection->prepare($this->getQuery());
-//        $pdoStatement->;
+        $pdoStatement->execute($this->params);
+        return $pdoStatement->fetchAll();
     }
 
     /**

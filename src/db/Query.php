@@ -19,6 +19,7 @@ abstract class Query
     protected $orderBy;
     protected $groupBy;
     protected $limit;
+    protected $plainQuery;
 
     abstract protected function buildQuery();
     /**
@@ -156,5 +157,16 @@ abstract class Query
     {
         $this->params = array_merge($this->params, $params);
         return $this;
+    }
+
+    /**
+     * If the API does not support the desired functionality, we can simply pass the SQL here
+     * @param type $query
+     * @return $this
+     */
+    public function prepare(string $query, array $params): Query
+    {
+        $this->plainQuery = $query;
+        return $this->addParams($params);
     }
 }

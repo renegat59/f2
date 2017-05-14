@@ -54,6 +54,8 @@ class InsertQuery extends Query
      */
     public function execute()
     {
-        
+        $pdoStatement = $this->dbConnection->prepare($this->getQuery());
+        $pdoStatement->exec($this->params);
+        return $pdoStatement->lastInsertId();
     }
 }

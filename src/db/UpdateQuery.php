@@ -51,6 +51,8 @@ class UpdateQuery extends Query
      */
     public function execute()
     {
-
+        $pdoStatement = $this->dbConnection->prepare($this->getQuery());
+        $pdoStatement->execute($this->params);
+        return $pdoStatement->rowCount();
     }
 }
