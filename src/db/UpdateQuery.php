@@ -24,7 +24,7 @@ class UpdateQuery extends Query
         $query .= $this->buildWhereClause();
         $query .= $this->buildOrderBy();
         $query .= $this->buildLimit();
-        return trim($query).';';
+        return trim($query);
     }
 
     public function set(array $values): Query
@@ -44,5 +44,13 @@ class UpdateQuery extends Query
                 array_keys($this->values)
             )
         ).' ';
+    }
+
+    /**
+     * Executes the update query and returns number of rows affected
+     */
+    public function execute()
+    {
+
     }
 }

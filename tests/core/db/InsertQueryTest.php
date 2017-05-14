@@ -27,8 +27,8 @@ class InsertQueryTest extends TestCase
     public function testInsertInto()
     {
         $this->assertNotNull($this->insertQuery->insertInto('table1')->values(['a' => 1]));
-        $this->assertEquals('INSERT INTO table1 (a) VALUES (:a);', $this->insertQuery->getQuery());
-        $this->assertEquals('INSERT INTO table2 (a) VALUES (:a);', $this->insertQuery->insertInto('table2')->getQuery()
+        $this->assertEquals('INSERT INTO table1 (a) VALUES (:a)', $this->insertQuery->getQuery());
+        $this->assertEquals('INSERT INTO table2 (a) VALUES (:a)', $this->insertQuery->insertInto('table2')->getQuery()
         );
     }
 
@@ -40,6 +40,6 @@ class InsertQueryTest extends TestCase
                 'age' => 34
             ])
             ->getQuery();
-        $this->assertEquals("INSERT INTO table1 (name, age) VALUES (:name, :age);", $query);
+        $this->assertEquals('INSERT INTO table1 (name, age) VALUES (:name, :age)', $query);
     }
 }

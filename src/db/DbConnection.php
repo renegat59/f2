@@ -47,6 +47,21 @@ class DbConnection extends Component
         return (new DeleteQuery($this))->delete($table);
     }
 
+    public function transaction()
+    {
+        //create and return transaction
+    }
+
+    public function commit()
+    {
+        //commits transaction
+    }
+
+    public function rollback()
+    {
+        //rollbacks transaction
+    }
+
     private function validateConfig($config)
     {
         if (!isset($config['host'])) {

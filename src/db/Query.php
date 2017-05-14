@@ -9,6 +9,9 @@ namespace FTwo\db;
  */
 abstract class Query
 {
+    /**
+     * @var \PDOConnection
+     */
     protected $dbConnection;
     protected $table;
     protected $whereClause;
@@ -18,6 +21,10 @@ abstract class Query
     protected $limit;
 
     abstract protected function buildQuery();
+    /**
+     * Executes a query. This function will behave diffrently and return different things depending on Query type
+     */
+    abstract public function execute();
 
     public function __construct($connection)
     {
@@ -70,10 +77,10 @@ abstract class Query
         return $this;
     }
 
-    public function limit(string $limit): Query
+    public function limit(string $limit, array $params=[]): Query
     {
         $this->limit = $limit;
-        return $this;
+        return $this->addParams($params);
     }
 
     /**
@@ -83,11 +90,6 @@ abstract class Query
     public function getQuery(): string
     {
         return $this->buildQuery();
-    }
-
-    public function execute(): array
-    {
-        return array();
     }
 
     /**

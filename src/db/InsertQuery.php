@@ -33,7 +33,7 @@ class InsertQuery extends Query
         //insert into post (field1, field2) values (:val1, :val2);
         $query = 'INSERT INTO '.$this->table.' ';
         $query .= $this->buildValues();
-        return trim($query).';';
+        return trim($query);
     }
 
     private function buildValues()
@@ -46,5 +46,14 @@ class InsertQuery extends Query
             $fields
         );
         return '('.implode(', ', $fields).') VALUES ('.implode(', ', $values).')';
+    }
+
+    /**
+     * Executes the Insert Statement and returns number of rows affected.
+     * //TODO: Wouldn't it be better to return the ID of the inserted element?
+     */
+    public function execute()
+    {
+        
     }
 }

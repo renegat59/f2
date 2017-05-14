@@ -24,18 +24,18 @@ class SelectQueryTest extends TestCase
     public function testSelect()
     {
         $this->assertNotNull($this->selectQuery->select('field1, field2'));
-        $this->assertEquals('SELECT field1, field2 FROM;', $this->selectQuery->getQuery());
+        $this->assertEquals('SELECT field1, field2 FROM', $this->selectQuery->getQuery());
         $this->selectQuery->select('field3');
-        $this->assertEquals('SELECT field3 FROM;', $this->selectQuery->getQuery());
+        $this->assertEquals('SELECT field3 FROM', $this->selectQuery->getQuery());
     }
 
 
     public function testFrom()
     {
         $this->assertNotNull($this->selectQuery->select('field1, field2')->from('table1'));
-        $this->assertEquals('SELECT field1, field2 FROM table1;', $this->selectQuery->getQuery());
+        $this->assertEquals('SELECT field1, field2 FROM table1', $this->selectQuery->getQuery());
         $this->selectQuery->from('table2');
-        $this->assertEquals('SELECT field1, field2 FROM table2;', $this->selectQuery->getQuery());
+        $this->assertEquals('SELECT field1, field2 FROM table2', $this->selectQuery->getQuery());
     }
 
     public function testGetQueryOrderByAndLimit()
@@ -49,7 +49,7 @@ class SelectQueryTest extends TestCase
             ->groupBy('field2')
             ->getQuery();
         $this->assertEquals(
-            'SELECT field1, field2 FROM table1 WHERE a=b GROUP BY field2 ORDER BY field3 LIMIT 3;',
+            'SELECT field1, field2 FROM table1 WHERE a=b GROUP BY field2 ORDER BY field3 LIMIT 3',
             $query
         );
     }
@@ -65,7 +65,7 @@ class SelectQueryTest extends TestCase
             ->groupBy('field2')
             ->getQuery();
         $this->assertEquals(
-            'SELECT field1, field2 FROM table1 WHERE a=:a GROUP BY field2 ORDER BY field3 LIMIT 3;',
+            'SELECT field1, field2 FROM table1 WHERE a=:a GROUP BY field2 ORDER BY field3 LIMIT 3',
             $query
         );
     }
@@ -78,7 +78,7 @@ class SelectQueryTest extends TestCase
             ->groupBy('field2')
             ->having('field2>:val1', [':val1'=>0])
             ->getQuery();
-        $this->assertEquals('SELECT count(field1) FROM table1 GROUP BY field2 HAVING field2>:val1;', $query);
+        $this->assertEquals('SELECT count(field1) FROM table1 GROUP BY field2 HAVING field2>:val1', $query);
     }
 
     public function testSelectJoins()
@@ -93,7 +93,7 @@ class SelectQueryTest extends TestCase
             ->getQuery();
         $this->assertEquals(
             'SELECT field1, field2 FROM table1 t1 LEFT JOIN table2 t2 ON t1.id=t2.t_id '
-            . 'RIGHT JOIN table3 t3 ON t1.id=t3.t_id WHERE a=:a ORDER BY field3;',
+            . 'RIGHT JOIN table3 t3 ON t1.id=t3.t_id WHERE a=:a ORDER BY field3',
             $query
         );
     }

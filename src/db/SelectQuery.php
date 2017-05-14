@@ -54,6 +54,36 @@ class SelectQuery extends Query
         return $this;
     }
 
+    /**
+     * Executes the select statement and returns array of associative arrays
+     */
+    public function execute(): array
+    {
+        $pdoStatement = $this->dbConnection->prepare($this->getQuery());
+//        $pdoStatement->;
+    }
+
+    /**
+     * Executes the select statement and returns array of objects of the given type
+     * @param type $class
+     */
+    public function executeAs(string $class): array
+    {
+        $results = $this->execute();
+        return array_map(function($result){
+            //TODO set all the fields of the object (find fast way)
+        }, $results);
+    }
+
+    /**
+     * Executes the select statement and returns value of the first column of the first row
+     */
+    public function executeScalar()
+    {
+//        $pdoQuery = $this->dbConnection->prepare($this->getQuery());
+//        $pdoQuery->execute($this->params);
+    }
+
     private function addJoin(string $joinType, string $table)
     {
         $this->joins[] = $joinType.' '.$table;
@@ -68,7 +98,7 @@ class SelectQuery extends Query
         $query .= $this->buildHaving();
         $query .= $this->buildOrderBy();
         $query .= $this->buildLimit();
-        return trim($query).';';
+        return trim($query);
     }
 
     private function buildJoins(): string

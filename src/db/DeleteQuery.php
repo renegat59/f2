@@ -22,6 +22,14 @@ class DeleteQuery extends Query
         $query .= $this->buildWhereClause();
         $query .= $this->buildOrderBy();
         $query .= $this->buildLimit();
-        return trim($query).';';
+        return trim($query);
+    }
+
+    /**
+     * Executes the delete query and returns number of rows affected
+     */
+    public function execute()
+    {
+        
     }
 }
