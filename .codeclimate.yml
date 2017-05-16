@@ -1,0 +1,20 @@
+---
+exclude_paths:
+ - "/vendor/*"
+ - "/phinx/*"
+engines:
+  phpcodesniffer:
+    enabled: true
+    config:
+      file_extensions: "php"
+  phan:
+    enabled: true
+    config:
+      file_extensions: "php"
+  phpmd:
+    enabled: true
+  fixme:
+    enabled: true
+ratings:
+  paths:
+  - "**.php"
