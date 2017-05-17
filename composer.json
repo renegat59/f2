@@ -15,7 +15,8 @@
     "require-dev": {
         "squizlabs/php_codesniffer": "2.*",
         "phpunit/phpunit": "^6.1",
-        "phpunit/php-code-coverage": "^5.2"
+        "phpunit/php-code-coverage": "^5.2",
+        "codeclimate/php-test-reporter": "dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -23,7 +24,8 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit ./tests --coverage-clover=coverage.xml",
-        "style": "vendor/bin/phpcs ."
+        "test": "./vendor/bin/phpunit ./tests",
+        "style": "./vendor/bin/phpcs .",
+        "codeclimate-send": "./vendor/bin/test-reporter --coverage-report=build/coverage.xml"
     }
 }
