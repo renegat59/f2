@@ -29,7 +29,6 @@ class SelectQueryTest extends TestCase
         $this->assertEquals('SELECT field3 FROM', $this->selectQuery->getQuery());
     }
 
-
     public function testFrom()
     {
         $this->assertNotNull($this->selectQuery->select('field1, field2')->from('table1'));
@@ -96,5 +95,11 @@ class SelectQueryTest extends TestCase
             . 'RIGHT JOIN table3 t3 ON t1.id=t3.t_id WHERE a=:a ORDER BY field3',
             $query
         );
+    }
+
+    public function testPrepare()
+    {
+        $this->selectQuery->prepare('SELECT * FROM table');
+        $this->assertEquals('SELECT * FROM table', $this->selectQuery->getQuery());
     }
 }

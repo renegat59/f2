@@ -25,6 +25,7 @@ class F2
         self::$components->init('router', new Router(self::$config['router']));
         self::$components->init('middleware', $this->generateMiddleware(self::$config['middleware']));
         if(isset(self::$config['webcache'])) {
+            //TODO: add default cache path:
             self::$components->init('webcache', new WebCache(self::$config['webcache']));
         }
     }

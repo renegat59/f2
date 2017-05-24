@@ -1,7 +1,6 @@
 /vendor/*
 /nbproject
 /nbproject/private/
-/cache
 /cache/*
 /build
 /build/*

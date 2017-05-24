@@ -90,7 +90,7 @@ abstract class Query
      */
     public function getQuery(): string
     {
-        return $this->buildQuery();
+        return $this->plainQuery ?? $this->buildQuery();
     }
 
     /**
@@ -159,12 +159,21 @@ abstract class Query
         return $this;
     }
 
+    protected function resultToClass(array $result, string $class)
+    {
+        $object = new $class();
+        foreach ($result as $key=>$value) {
+            $object->{$key} = $value;
+        }
+        return $object;
+    }
+
     /**
      * If the API does not support the desired functionality, we can simply pass the SQL here
      * @param type $query
      * @return $this
      */
-    public function prepare(string $query, array $params): Query
+    public function prepare(string $query, array $params = []): Query
     {
         $this->plainQuery = $query;
         return $this->addParams($params);

@@ -11,8 +11,6 @@ use FTwo\core\Component;
  */
 class MemCache extends Component implements Cache
 {
-
-    //put your code here
     public function addObject(string $key, mixed $value): bool
     {
     }

@@ -66,13 +66,14 @@ class SelectQuery extends Query
 
     /**
      * Executes the select statement and returns array of objects of the given type
+     * //TODO: check if that works
      * @param type $class
      */
     public function executeAs(string $class): array
     {
         $results = $this->execute();
-        return array_map(function($result){
-            //TODO set all the fields of the object (find fast way)
+        return array_map(function($result) use ($class) {
+            return $this->resultToClass($result, $class);
         }, $results);
     }
 
