@@ -8,7 +8,19 @@ namespace FTwo\core;
  */
 class Component
 {
+    private $enabled;
+
     public function init()
     {
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled)
+    {
+        $this->enabled = $enabled;
     }
 }

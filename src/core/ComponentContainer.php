@@ -29,9 +29,14 @@ class ComponentContainer
      */
     public function get(string $componentName): Component
     {
-        if (isset(self::$components[$componentName])) {
+        if ($this->exists($componentName)) {
             return self::$components[$componentName];
         }
         throw new exceptions\F2Exception("Component $componentName is not available");
+    }
+
+    public function exists(string $componentName): bool
+    {
+        return isset(self::$components[$componentName]);
     }
 }

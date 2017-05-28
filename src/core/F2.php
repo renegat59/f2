@@ -13,7 +13,15 @@ use FTwo\cache\WebCache;
 class F2
 {
     private static $config;
+    /**
+     * Container holding all the F2 components.
+     * @var ComponentContainer
+     */
     private static $components;
+    /**
+     * Environment definitions.
+     * @var Environment
+     */
     private static $environment;
 
     public function __construct(array $config)
@@ -23,11 +31,11 @@ class F2
         self::$components = new ComponentContainer();
         self::$components->init('db', new DbConnection(self::$config['db']));
         self::$components->init('router', new Router(self::$config['router']));
-        self::$components->init('middleware', $this->generateMiddleware(self::$config['middleware']));
         if(isset(self::$config['webcache'])) {
-            //TODO: add default cache path:
             self::$components->init('webcache', new WebCache(self::$config['webcache']));
         }
+        self::$components->init('middleware', $this->generateMiddleware(self::$config['middleware']));
+        
     }
 
     public function start()
@@ -45,9 +53,14 @@ class F2
         return self::getComponent('db');
     }
 
-    public static function getComponent($componentName): Component
+    public static function getComponent(string $componentName): Component
     {
         return self::$components->get($componentName);
+    }
+
+    public static function hasComponent(string $componentName): bool
+    {
+        return self::$components->exists($componentName);
     }
 
     public static function getPath($folder)
@@ -85,7 +98,14 @@ class F2
     private function generateMiddleware(array $middlewareConfig): MiddlewareStack
     {
         $stack = new MiddlewareStack();
+        if (self::hasComponent('webcache')) {
+            $stack->appendMiddleware(new \FTwo\middleware\WebCacheMiddleware());
+        }
         $stack->appendMiddleware(new \FTwo\middleware\LocaleMiddleware());
+        foreach ($middlewareConfig as $middlewareClass=>$params) {
+            $middleware = new $middlewareClass($params);
+            $stack->appendMiddleware($middleware);
+        }
         return $stack;
     }
 

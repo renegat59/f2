@@ -47,6 +47,11 @@ class DbConnection extends Component
         return (new DeleteQuery($this))->delete($table);
     }
 
+    public function prepare(string $query): \PDOStatement
+    {
+        return $this->databaseHandler->prepare($query);
+    }
+
     public function transaction()
     {
         //create and return transaction

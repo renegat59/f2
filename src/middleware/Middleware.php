@@ -10,6 +10,13 @@ namespace FTwo\middleware;
 abstract class Middleware
 {
 
+    protected $params;
+    
+    public function __construct(array $params = [])
+    {
+        $this->params = $params;
+    }
+
     /**
      * Function run before every request
      */

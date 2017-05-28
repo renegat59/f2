@@ -19,20 +19,33 @@ use FTwo\http\StatusCode;
  */
 class WebCacheMiddleware extends Middleware
 {
+    private $requestedPath;
+    private $cachedContent;
 
     public function before(Request $request, Response $response): Response
     {
-        $requestedPath = $request->server('PATH_INFO');
         $webcache = F2::getComponent('webcache');
-        $cachedContent = $webcache->getPath($$requestedPath);
-        if (FALSE !== $cachedContent) {
+        $this->requestedPath = $request->server('PATH_INFO');
+        $this->cachedContent = $webcache->getPath($this->requestedPath);
+        if (FALSE !== $this->cachedContent) {
             $response->setStatus(StatusCode::HTTP_OK)
-                ->send($cachedContent);
+                ->send($this->cachedContent);
+            exit();
+        } else {
+            //start caching
+            ob_start();
         }
+        return $response;
     }
 
     public function after(Request $request, Response $response): Response
     {
-        //todo: cache
+        if (FALSE === $this->cachedContent) {
+            $output = ob_get_clean();
+            $webcache = F2::getComponent('webcache');
+            $webcache->cachePath($this->requestedPath, $output);
+            return $response->send($output);
+        }
+        return $response;
     }
 }

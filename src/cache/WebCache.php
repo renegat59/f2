@@ -11,13 +11,20 @@ use FTwo\core\Component;
  */
 class WebCache extends Component
 {
-    private $cacheTime = 86400; //24 hours in seconds
+    private $cacheTime;
     private $cachePath;
 
     public function __construct($config)
     {
-        $this->cacheTime = $config['cacheTime'];
-        $this->cachePath = $config['cachePath'];
+        $this->cacheTime = $config['cacheTime'] ?? 86400;
+        $this->cachePath = $config['cachePath'] ?? $this->defaultCachePath();
+        $this->setEnabled($config['enabled'] ?? TRUE);
+    }
+
+    private function defaultCachePath(): string
+    {
+        $scriptName = filter_input(INPUT_SERVER, 'SCRIPT_FILENAME');
+        return dirname($scriptName).DIRECTORY_SEPARATOR.'cache';
     }
 
     public function init()
@@ -32,8 +39,12 @@ class WebCache extends Component
     public function getPath(string $path)
     {
         $cacheFilePath = $this->buildPath($path);
-        if(file_exists($cacheFilePath) && filemtime($cacheFilePath) > time()) {
-            return file_get_contents($cacheFilePath);
+        if (file_exists($cacheFilePath)) {
+            if (filemtime($cacheFilePath) > time()) {
+                return file_get_contents($cacheFilePath);
+            } else {
+                unlink($cacheFilePath);
+            }
         }
         return false;
     }
@@ -41,7 +52,7 @@ class WebCache extends Component
     public function cachePath(string $path, string $content)
     {
         $cacheFilePath = $this->buildPath($path);
-        if(file_exists($cacheFilePath)) {
+        if (file_exists($cacheFilePath)) {
             unlink($cacheFilePath);
         }
         file_put_contents($cacheFilePath, $content);

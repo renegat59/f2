@@ -31,6 +31,6 @@ return [
     'params' => [
         'template' => 'default',
     ],
-    'middleware' => [
-    ]
+    'middleware' => require('middleware.php')
 ];
+
