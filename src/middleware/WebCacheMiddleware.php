@@ -53,8 +53,9 @@ class WebCacheMiddleware extends Middleware
 
     private function shouldCache(Request $request)
     {
-        //at the moment we only suport caching for GET requests.
-        return $request->method() === \FTwo\http\HttpMethod::GET;
+        $env = F2::getEnvironment();
+        return $request->method() === \FTwo\http\HttpMethod::GET &&
+            $env->isProd();
     }
 
     private function startCaching()

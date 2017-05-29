@@ -55,8 +55,43 @@ class WebCache extends Component
         if (file_exists($cacheFilePath)) {
             unlink($cacheFilePath);
         }
+        $fileDirectory = dirname($cacheFilePath);
+        if(!file_exists($fileDirectory)) {
+            mkdir($fileDirectory, 0755, true);
+        }
         file_put_contents($cacheFilePath, $content);
         touch($cacheFilePath, time() + $this->cacheTime);
+    }
+
+    public function purge()
+    {
+        $this->cleanCache($this->cachePath);
+    }
+
+    private function cleanCache($directory)
+    {
+        if(empty($directory)){
+            return true;
+        }
+
+        if (!file_exists($directory)) {
+            return true;
+        }
+
+        if (!is_dir($directory)) {
+            return unlink($directory);
+        }
+
+        foreach (glob($directory.DIRECTORY_SEPARATOR.'*') as $item) {
+            if (!$this->cleanCache($item)) {
+                return false;
+            }
+        }
+        if($directory === $this->cachePath){
+            //do not delete the cache directory itself
+            return true;
+        }
+        return rmdir($directory);
     }
 
     private function buildPath($path)

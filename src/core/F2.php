@@ -98,7 +98,7 @@ class F2
     private function generateMiddleware(array $middlewareConfig): MiddlewareStack
     {
         $stack = new MiddlewareStack();
-        if (self::hasComponent('webcache')) {
+        if (self::hasComponent('webcache') && self::getComponent('webcache')->isEnabled()) {
             $stack->appendMiddleware(new \FTwo\middleware\WebCacheMiddleware());
         }
         $stack->appendMiddleware(new \FTwo\middleware\LocaleMiddleware());

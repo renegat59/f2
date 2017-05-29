@@ -4,7 +4,7 @@ use FTwo\cache\MemCache;
 use FTwo\core\Environment;
 
 return [
-    'env' => Environment::DEV,
+    'env' => Environment::PROD,
     'db' => [
         'host' => '127.0.0.1',
         'port' => '3307',
@@ -22,7 +22,7 @@ return [
         ]
     ],
     'webcache' => [
-        'cacheTime' => 172800
+        'cacheTime' => 172800,
     ],
     'router' => [
         'hostname' => 'http://localhost:8888',
