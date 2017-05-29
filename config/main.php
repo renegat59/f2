@@ -33,4 +33,3 @@ return [
     ],
     'middleware' => require('middleware.php')
 ];
-

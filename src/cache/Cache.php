@@ -32,7 +32,7 @@ abstract class Cache extends Component
     public function getOrCache(string $key, callable $creator)
     {
         $value = $this->get($key);
-        if (FALSE === $value) {
+        if (false === $value) {
             $value = $creator();
             $this->addString($key, $this->serialize($value));
         }

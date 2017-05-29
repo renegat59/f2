@@ -102,7 +102,7 @@ class F2
             $stack->appendMiddleware(new \FTwo\middleware\WebCacheMiddleware());
         }
         $stack->appendMiddleware(new \FTwo\middleware\LocaleMiddleware());
-        foreach ($middlewareConfig as $middlewareClass=>$params) {
+        foreach ($middlewareConfig as $middlewareClass => $params) {
             $middleware = new $middlewareClass($params);
             $stack->appendMiddleware($middleware);
         }

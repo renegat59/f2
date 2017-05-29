@@ -78,7 +78,7 @@ abstract class Query
         return $this;
     }
 
-    public function limit(string $limit, array $params=[]): Query
+    public function limit(string $limit, array $params = []): Query
     {
         $this->limit = $limit;
         return $this->addParams($params);
@@ -162,7 +162,7 @@ abstract class Query
     protected function resultToClass(array $result, string $class)
     {
         $object = new $class();
-        foreach ($result as $key=>$value) {
+        foreach ($result as $key => $value) {
             $object->{$key} = $value;
         }
         return $object;

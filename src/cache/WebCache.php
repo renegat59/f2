@@ -18,7 +18,7 @@ class WebCache extends Component
     {
         $this->cacheTime = $config['cacheTime'] ?? 86400;
         $this->cachePath = $config['cachePath'] ?? $this->defaultCachePath();
-        $this->setEnabled($config['enabled'] ?? TRUE);
+        $this->setEnabled($config['enabled'] ?? true);
     }
 
     private function defaultCachePath(): string
