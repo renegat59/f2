@@ -13,11 +13,12 @@ use FTwo\middleware\Middleware;
  */
 class MiddlewareStack extends Component
 {
+    private $middlewarePath;
     private $stack = array();
 
     public function __construct()
     {
-        $middlewarePath = F2::getPath('middleware');
+        $this->middlewarePath = F2::getPath('middleware');
     }
 
     public function runBefore(Request $request, Response $response): Response
@@ -25,6 +26,9 @@ class MiddlewareStack extends Component
         $count = count($this->stack);
         for ($ii = 0; $ii < $count; $ii++) {
             $response = $this->stack[$ii]->before($request, $response);
+            if($response === FALSE){
+                exit();
+            }
         }
         return $response;
     }

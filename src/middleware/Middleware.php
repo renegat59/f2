@@ -17,9 +17,6 @@ abstract class Middleware
         $this->params = $params;
     }
 
-    /**
-     * Function run before every request
-     */
     abstract public function before(\FTwo\http\Request $request, \FTwo\http\Response $response): \FTwo\http\Response;
 
     /**

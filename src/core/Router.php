@@ -65,6 +65,7 @@ class Router extends Component
         (new $controllerName())->call($path, $this->request, $this->response);
 
         $this->response = $middleware->runAfter($this->request, $this->response);
+        $this->response->done();
     }
 
     public function getResponse(): Response

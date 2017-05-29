@@ -48,6 +48,15 @@ class Response
     }
 
     /**
+     * This function indicates, that the response is done. It basically exits() the code, but we may want to add more
+     * functinoality to this in the future.
+     */
+    public function done()
+    {
+        exit();
+    }
+
+    /**
      * Adds a variable to the rendered view;
      * @param string $variable
      * @param string $value
