@@ -24,7 +24,7 @@ class WebCacheMiddleware extends Middleware
 
     public function before(Request $request, Response $response): Response
     {
-        if ($this->shouldCache()) {
+        if ($this->shouldCache($request)) {
             $webcache = F2::getComponent('webcache');
             $this->requestedPath = $request->server('PATH_INFO') ?? '/index';
             $this->cachedContent = $webcache->getPath($this->requestedPath);
@@ -41,7 +41,7 @@ class WebCacheMiddleware extends Middleware
 
     public function after(Request $request, Response $response): Response
     {
-        if ($this->shouldCache() && FALSE === $this->cachedContent) {
+        if ($this->shouldCache($request) && FALSE === $this->cachedContent) {
             //end caching:
             $output = $this->endCaching();
             $webcache = F2::getComponent('webcache');

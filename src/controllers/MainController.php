@@ -17,7 +17,8 @@ class MainController extends BaseController
 
     protected function init()
     {
-        $this->addRoute(HttpMethod::GET, '/', 'getIndex');
+        $this->addRoute(HttpMethod::GET, '/', 'getIndex')
+            ->addRoute(HttpMethod::POST, '/', 'postIndex');
     }
 
     public function getIndex(Request $request, Response $response)
@@ -26,5 +27,10 @@ class MainController extends BaseController
         $router = \FTwo\core\F2::getRouter();
         $address = $router->getAbsoluteUrl('/allposts');
         echo "All posts address is $address";
+    }
+
+    public function postIndex(Request $request, Response $response)
+    {
+        return $this->getIndex($request, $response);
     }
 }
