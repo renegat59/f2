@@ -13,6 +13,9 @@ engines:
       file_extensions: "php"
   phpmd:
     enabled: true
+    checks:
+      UnusedFormalParameter:
+        enabled: false
   fixme:
     enabled: true
 ratings:
