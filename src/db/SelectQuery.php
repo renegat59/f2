@@ -49,7 +49,8 @@ class SelectQuery extends Query
         return $this;
     }
 
-    public function fullOuterJoin(string $joinTable): Query{
+    public function fullOuterJoin(string $joinTable): Query
+    {
         $this->addJoin('FULL OUTER JOIN', $joinTable);
         return $this;
     }
@@ -72,7 +73,7 @@ class SelectQuery extends Query
     public function executeAs(string $class): array
     {
         $results = $this->execute();
-        return array_map(function($result) use ($class) {
+        return array_map(function ($result) use ($class) {
             return $this->resultToClass($result, $class);
         }, $results);
     }
@@ -113,7 +114,7 @@ class SelectQuery extends Query
 
     private function buildHaving(): string
     {
-        if(!empty($this->havingCondition)) {
+        if (!empty($this->havingCondition)) {
             return 'HAVING '.$this->havingCondition.' ';
         }
         return '';

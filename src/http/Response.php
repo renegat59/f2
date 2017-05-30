@@ -40,7 +40,7 @@ class Response
         return $this;
     }
 
-    public function send(string $content, string $contentType='text/html'): Response
+    public function send(string $content, string $contentType = 'text/html'): Response
     {
         $this->addHeader('Content-Type: '.$contentType);
         echo $content;

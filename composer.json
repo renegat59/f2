@@ -20,12 +20,14 @@
     },
     "autoload": {
         "psr-4": {
-            "FTwo\\": "src"
+            "FTwo\\": "src",
+            "FTwo\\tests\\": "tests"
         }
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit ./tests",
+        "test": "./vendor/bin/phpunit -c phpunit.xml",
         "style": "./vendor/bin/phpcs .",
+        "fix-style": " vendor/bin/phpcbf .",
         "codeclimate-send": "./vendor/bin/test-reporter --coverage-report=build/coverage.xml"
     }
 }

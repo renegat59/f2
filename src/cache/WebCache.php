@@ -56,7 +56,7 @@ class WebCache extends Component
             unlink($cacheFilePath);
         }
         $fileDirectory = dirname($cacheFilePath);
-        if(!file_exists($fileDirectory)) {
+        if (!file_exists($fileDirectory)) {
             mkdir($fileDirectory, 0755, true);
         }
         file_put_contents($cacheFilePath, $content);
@@ -70,7 +70,7 @@ class WebCache extends Component
 
     private function cleanCache($directory)
     {
-        if(empty($directory)){
+        if (empty($directory)) {
             return true;
         }
 
@@ -87,7 +87,7 @@ class WebCache extends Component
                 return false;
             }
         }
-        if($directory === $this->cachePath){
+        if ($directory === $this->cachePath) {
             //do not delete the cache directory itself
             return true;
         }

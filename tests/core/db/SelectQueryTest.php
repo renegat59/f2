@@ -1,5 +1,7 @@
 <?php
+namespace FTwo\tests\core\db;
 
+use FTwo\db\SelectQuery;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,7 +20,7 @@ class SelectQueryTest extends TestCase
     {
         parent::setUp();
         //todo: replace null with dbconnection
-        $this->selectQuery = new FTwo\db\SelectQuery(null);
+        $this->selectQuery = new SelectQuery(null);
     }
 
     public function testSelect()

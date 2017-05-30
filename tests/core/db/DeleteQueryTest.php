@@ -1,5 +1,7 @@
 <?php
+namespace FTwo\tests\core\db;
 
+use FTwo\db\DeleteQuery;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -10,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 class DeleteQueryTest extends TestCase
 {
     /**
-     * @var FTwo\db\DeleteQuery
+     * @var DeleteQuery
      */
     private $deleteQuery;
 
@@ -18,7 +20,7 @@ class DeleteQueryTest extends TestCase
     {
         parent::setUp();
         //todo: replace null with dbconnection
-        $this->deleteQuery = new FTwo\db\DeleteQuery(null);
+        $this->deleteQuery = new DeleteQuery(null);
     }
 
     public function testFrom()

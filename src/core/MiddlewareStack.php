@@ -26,7 +26,7 @@ class MiddlewareStack extends Component
         $count = count($this->stack);
         for ($ii = 0; $ii < $count; $ii++) {
             $response = $this->stack[$ii]->before($request, $response);
-            if($response === false){
+            if ($response === false) {
                 exit();
             }
         }

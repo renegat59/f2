@@ -1,4 +1,5 @@
 <?php
+namespace FTwo\tests\core;
 
 use FTwo\core\Environment;
 use PHPUnit\Framework\TestCase;
