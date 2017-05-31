@@ -6,7 +6,7 @@ namespace FTwo\core;
  *
  * @author Mateusz P <bananq@gmail.com>
  */
-class Component
+abstract class Component
 {
     private $enabled;
 

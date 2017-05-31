@@ -55,7 +55,6 @@ class ErrorController extends BaseController
                     'errorMessage' => $exception->getMessage()
                 ]
             );
-        
     }
 
     private function printStackTrace()
