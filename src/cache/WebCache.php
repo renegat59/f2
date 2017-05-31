@@ -42,9 +42,8 @@ class WebCache extends Component
         if (file_exists($cacheFilePath)) {
             if (filemtime($cacheFilePath) > time()) {
                 return file_get_contents($cacheFilePath);
-            } else {
-                unlink($cacheFilePath);
             }
+            unlink($cacheFilePath);
         }
         return false;
     }

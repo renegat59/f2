@@ -83,11 +83,10 @@ class F2
             $value = self::$config[$keys[0]];
             $keyLength = count($keys);
             for ($ii = 1; $ii < $keyLength; $ii++) {
-                if (isset($value[$keys[$ii]])) {
-                    $value = $value[$keys[$ii]];
-                } else {
+                if (!isset($value[$keys[$ii]])) {
                     throw new exceptions\F2Exception("Config key <$keys[$ii]> incorrect");
                 }
+                $value = $value[$keys[$ii]];
             }
             return $value;
         }

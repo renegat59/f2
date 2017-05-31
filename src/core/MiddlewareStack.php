@@ -59,7 +59,6 @@ class MiddlewareStack extends Component
     {
         if ($position > 0) {
             array_splice($this->stack, $position, 0, $middleware);
-        } else {
         }
         return $this;
     }

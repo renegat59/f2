@@ -44,18 +44,18 @@ class ErrorController extends BaseController
             echo "\r\n--------\r\n";
             echo $exception->getTraceAsString();
             throw $exception;
-        } else {
-            $errorCode = $exception->getCode();
-            //TODO: we have to log here
-            $response->setStatus($errorCode)
-                ->render(
-                    'errors/error',
-                    [
-                        'code' => StatusCode::HTTP_INTERNAL_SERVER_ERROR,
-                        'errorMessage' => $exception->getMessage()
-                    ]
-                );
         }
+        $errorCode = $exception->getCode();
+        //TODO: we have to log here
+        $response->setStatus($errorCode)
+            ->render(
+                'errors/error',
+                [
+                    'code' => StatusCode::HTTP_INTERNAL_SERVER_ERROR,
+                    'errorMessage' => $exception->getMessage()
+                ]
+            );
+        
     }
 
     private function printStackTrace()

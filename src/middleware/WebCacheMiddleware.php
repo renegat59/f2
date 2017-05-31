@@ -32,9 +32,8 @@ class WebCacheMiddleware extends Middleware
                 $response->setStatus(StatusCode::HTTP_OK)
                     ->send($this->cachedContent)
                     ->done();
-            } else {
-                $this->startCaching();
             }
+            $this->startCaching();
         }
         return $response;
     }
