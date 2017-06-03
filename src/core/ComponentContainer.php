@@ -9,7 +9,7 @@ namespace FTwo\core;
  */
 class ComponentContainer
 {
-    private static $components = array();
+    private $components = array();
 
     /**
      * Adds a component to the components lists
@@ -19,7 +19,7 @@ class ComponentContainer
     public function init(string $containerName, $object)
     {
         $object->init();
-        self::$components[$containerName] = $object;
+        $this->components[$containerName] = $object;
     }
 
     /**
@@ -30,13 +30,13 @@ class ComponentContainer
     public function get(string $componentName): Component
     {
         if ($this->exists($componentName)) {
-            return self::$components[$componentName];
+            return $this->components[$componentName];
         }
         throw new exceptions\F2Exception("Component $componentName is not available");
     }
 
     public function exists(string $componentName): bool
     {
-        return isset(self::$components[$componentName]);
+        return isset($this->components[$componentName]);
     }
 }
