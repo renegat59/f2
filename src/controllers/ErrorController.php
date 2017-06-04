@@ -52,7 +52,7 @@ class ErrorController extends BaseController
                 'errors/error',
                 [
                     'code' => StatusCode::HTTP_INTERNAL_SERVER_ERROR,
-                    'errorMessage' => $exception->getMessage()
+                    'errorMessage' => F2::i18n($exception->getMessage())
                 ]
             );
     }

@@ -54,18 +54,47 @@ class Router extends Component
 
     private function routeInternal()
     {
-        $path = $this->request->server('PATH_INFO') ?? '/';
-        //old way: filter_input(INPUT_SERVER, 'PATH_INFO') ?? '/';
-        $controllerName = $this->routes[$path] ?? null;
         $middleware = F2::getComponent('middleware');
         $this->response = $middleware->runBefore($this->request, $this->response);
+
+        $path = $this->request->server('PATH_INFO') ?? '/';
+        $route = $this->findRoute($path);
+        if(null === $route) {
+            throw new HttpException(StatusCode::HTTP_NOT_FOUND, "$path not found");
+        }
+
+        $controllerName = $this->routes[$route] ?? null;
+        
         if (!class_exists($controllerName)) {
-            throw new HttpException(StatusCode::HTTP_NOT_FOUND, "$controllerName Not found");
+            throw new HttpException(StatusCode::HTTP_NOT_FOUND, "$path not found");
         }
         (new $controllerName())->call($path, $this->request, $this->response);
 
         $this->response = $middleware->runAfter($this->request, $this->response);
         $this->response->done();
+    }
+
+    private function findRoute(string $path)
+    {
+        if(isset($this->routes[$path])){
+            return $this->routes[$path];
+        }
+        $cleanPath = rtrim($path, '/');
+        //if no exact match found, we try to match variables
+        $slashCount = substr_count($cleanPath, '/');
+        $filteredRoutes = array_filter(
+            $this->routes,
+            function($key) use($cleanPath, $slashCount) {
+                $sameNumberOfSlashes = ($slashCount === substr_count($key, '/'));
+                $prefix = strtok($key, ':');
+                $startsCorrectly = (0 === strpos($cleanPath, $prefix));
+                //explicitly exclude '/' path
+                return $sameNumberOfSlashes && $startsCorrectly && $key !== '/';
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+        reset($filteredRoutes);
+        return key($filteredRoutes);
     }
 
     public function getResponse(): Response

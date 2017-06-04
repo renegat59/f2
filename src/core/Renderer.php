@@ -69,6 +69,7 @@ class Renderer
 
     public function getVar(string $key): string
     {
+        //tODO: wywala sie tu
         return $this->globalVariables[$key];
     }
 }

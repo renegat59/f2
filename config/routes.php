@@ -10,6 +10,7 @@ return [
     */
     '/'=> MainController::class,
     '/allposts' => PostController::class,
-    '/post' => PostController::class,
+    '/post/:id' => PostController::class,
+//    '/posts/:month' => PostController::class,
     '/manifest.json' => WebconfController::class
 ];

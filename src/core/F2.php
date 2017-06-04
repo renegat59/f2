@@ -108,6 +108,20 @@ class F2
     }
 
     /**
+     * This function in future will provide translations if we want to implement them
+     * @param type $text
+     * @return type
+     */
+    public static function i18n($text)
+    {
+        $translator = self::getComponent('i18n');
+        if (null !== $translator) {
+            return $translator->translate($text);
+        }
+        return $text;
+    }
+
+    /**
      * @return Router
      */
     public static function getRouter(): Router

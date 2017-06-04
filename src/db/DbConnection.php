@@ -27,6 +27,11 @@ class DbConnection extends Component
         $this->databaseHandler = new PDO($connectionString, $config['user'], $config['password']);
     }
 
+    public function close()
+    {
+        $this->databaseHandler = null;
+    }
+
     public function select(string $fields): SelectQuery
     {
         return (new SelectQuery($this))->select($fields);

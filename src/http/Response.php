@@ -12,11 +12,13 @@ use \FTwo\core\F2;
 class Response
 {
     private $variables = [];
+    private $httpStatus;
 
     public $exception;
 
     public function setStatus(int $statusCode): Response
     {
+        $this->httpStatus = $statusCode;
         http_response_code($statusCode);
         return $this;
     }
@@ -53,6 +55,7 @@ class Response
      */
     public function done()
     {
+        $this->httpStatus = $this->httpStatus ?? StatusCode::HTTP_OK;
         exit();
     }
 

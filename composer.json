@@ -28,6 +28,7 @@
         "test": "./vendor/bin/phpunit -c phpunit.xml",
         "style": "./vendor/bin/phpcs .",
         "fix-style": " vendor/bin/phpcbf .",
-        "codeclimate-send": "./vendor/bin/test-reporter --coverage-report=build/coverage.xml"
+        "codeclimate-send": "./vendor/bin/test-reporter --coverage-report=build/coverage.xml",
+        "phinx": "./vendor/bin/phinx"
     }
 }
