@@ -114,7 +114,9 @@ class Router extends Component
             },
             ARRAY_FILTER_USE_KEY
         );
-        $this->request->addGetVariables($filteredVariables);
+        $this->request->addGetVariables(array_map(function ($element) {
+            return substr($element, 1);
+        }, $filteredVariables));
     }
 
     public function getResponse(): Response

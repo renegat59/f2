@@ -45,8 +45,10 @@ class Request
      */
     public function get(string $param)
     {
+        var_dump($param);
         $getParam = filter_input(INPUT_GET, $param, FILTER_SANITIZE_STRING);
         if (null === $getParam) {
+            var_dump($this->pathGetParams);
             return $this->pathGetParams[$param] ?? null;
         }
         return $getParam;

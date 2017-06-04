@@ -28,7 +28,7 @@ class AddPostsKeyAndFields extends AbstractMigration
     public function change()
     {
         $posts = $this->table('post');
-        $posts->addColumn('lead', 'string', ['limit'=>512]);
+        $posts->addColumn('lead', 'string', ['limit'=>512, 'after'=>'content']);
         $posts->addIndex('created');
         $posts->save();
     }
