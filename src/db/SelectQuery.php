@@ -60,22 +60,25 @@ class SelectQuery extends Query
      */
     public function execute(): array
     {
-        $pdoStatement = $this->dbConnection->prepare($this->getQuery());
-        $pdoStatement->execute($this->params);
-        return $pdoStatement->fetchAll();
+        $pdoStatement = $this->pdoStatement();
+        return $pdoStatement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
      * Executes the select statement and returns array of objects of the given type
-     * //TODO: check if that works
      * @param type $class
      */
     public function executeAs(string $class): array
     {
-        $results = $this->execute();
-        return array_map(function ($result) use ($class) {
-            return $this->resultToClass($result, $class);
-        }, $results);
+        $pdoStatement = $this->pdoStatement();
+        return $pdoStatement->fetchAll(\PDO::FETCH_CLASS, $class);
+    }
+
+    private function pdoStatement()
+    {
+        $pdoStatement = $this->dbConnection->prepare($this->getQuery());
+        $pdoStatement->execute($this->params);
+        return $pdoStatement;
     }
 
     /**

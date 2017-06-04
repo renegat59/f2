@@ -23,6 +23,7 @@ return [
     ],
     'webcache' => [
         'cacheTime' => 172800,
+        'enabled' => false
     ],
     'router' => [
         'hostname' => 'http://localhost:8888',

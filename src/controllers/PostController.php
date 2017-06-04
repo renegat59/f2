@@ -44,22 +44,24 @@ class PostController extends BaseController
         $post = $dbConnection->select('title, content, created, author_id')
             ->from('post')
             ->where('id=:id', [':id'=>$postId])
-            ->execute();
+            ->executeOne();
+        
         if (empty($post)) {
             throw new HttpException(StatusCode::HTTP_NOT_FOUND, F2::i18n('Post not found'));
         }
         $author = $dbConnection->select('alias')
             ->from('author')
-            ->where('id=:id', [':id'=>$post['author_id']]);
+            ->where('id=:id', [':id'=>$post['author_id']])
+            ->executeOne();
 
         $dbConnection->close();
 
         $res->render(
             'posts/post',
             [
-                    'post'=>$post,
-                    'author'=>$author['alias']
-                ]
+                    'post' => $post,
+                    'author' => $author['alias']
+            ]
         );
     }
 }
