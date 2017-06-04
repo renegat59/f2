@@ -46,7 +46,7 @@ class Request
     public function get(string $param)
     {
         $getParam = filter_input(INPUT_GET, $param, FILTER_SANITIZE_STRING);
-        if(null === $getParam) {
+        if (null === $getParam) {
             return $this->pathGetParams[$param] ?? null;
         }
         return $getParam;

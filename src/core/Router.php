@@ -96,7 +96,7 @@ class Router extends Component
 
         reset($filteredRoutes);
         $route = key($filteredRoutes);
-        if($route !== null) {
+        if ($route !== null) {
             $this->extractVariables($route, $path);
         }
         return $route;

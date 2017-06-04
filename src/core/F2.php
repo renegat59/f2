@@ -114,7 +114,7 @@ class F2
      */
     public static function i18n($text)
     {
-        if(self::hasComponent('i18n')){
+        if (self::hasComponent('i18n')) {
             $translator = self::getComponent('i18n');
             return $translator->translate($text);
         }
