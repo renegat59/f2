@@ -59,7 +59,7 @@ class Router extends Component
 
         $path = $this->request->server('PATH_INFO') ?? '/';
         $route = $this->findRoute($path);
-        if(null === $route) {
+        if (null === $route) {
             throw new HttpException(StatusCode::HTTP_NOT_FOUND, "$path not found");
         }
 
@@ -68,7 +68,7 @@ class Router extends Component
         if (!class_exists($controllerName)) {
             throw new HttpException(StatusCode::HTTP_NOT_FOUND, "$path not found");
         }
-        (new $controllerName())->call($path, $this->request, $this->response);
+        (new $controllerName())->call($route, $this->request, $this->response);
 
         $this->response = $middleware->runAfter($this->request, $this->response);
         $this->response->done();
@@ -76,7 +76,7 @@ class Router extends Component
 
     private function findRoute(string $path)
     {
-        if(isset($this->routes[$path])){
+        if (isset($this->routes[$path])) {
             return $this->routes[$path];
         }
         $cleanPath = rtrim($path, '/');
@@ -84,7 +84,7 @@ class Router extends Component
         $slashCount = substr_count($cleanPath, '/');
         $filteredRoutes = array_filter(
             $this->routes,
-            function($key) use($cleanPath, $slashCount) {
+            function ($key) use ($cleanPath, $slashCount) {
                 $sameNumberOfSlashes = ($slashCount === substr_count($key, '/'));
                 $prefix = strtok($key, ':');
                 $startsCorrectly = (0 === strpos($cleanPath, $prefix));
@@ -93,8 +93,28 @@ class Router extends Component
             },
             ARRAY_FILTER_USE_KEY
         );
+
         reset($filteredRoutes);
-        return key($filteredRoutes);
+        $route = key($filteredRoutes);
+        if($route !== null) {
+            $this->extractVariables($route, $path);
+        }
+        return $route;
+    }
+
+    private function extractVariables(string $route, string $path)
+    {
+        $varNames = explode('/', $route);
+        $varValues = explode('/', $path);
+        $variables = array_combine($varNames, $varValues);
+        $filteredVariables = array_filter(
+            $variables,
+            function ($key) {
+                return 0 === strpos($key, ':');
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+        $this->request->addGetVariables($filteredVariables);
     }
 
     public function getResponse(): Response

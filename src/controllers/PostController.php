@@ -55,12 +55,11 @@ class PostController extends BaseController
         $dbConnection->close();
 
         $res->render(
-                'posts/post',
-                [
+            'posts/post',
+            [
                     'post'=>$post,
                     'author'=>$author['alias']
                 ]
-            );
-        
+        );
     }
 }
