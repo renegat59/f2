@@ -8,9 +8,16 @@
             "email": "bananq@gmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../h2orm"
+        }
+    ],
     "require": {
         "robmorgan/phinx": "^0.8.0",
-        "erusev/parsedown": "^1.6"
+        "erusev/parsedown": "^1.6",
+        "renegat59/h2orm": "*"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "2.*",
