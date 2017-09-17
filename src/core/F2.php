@@ -47,7 +47,7 @@ class F2
      * Gets the current DB Connection
      * @return DbConnection current db connection
      */
-    public static function getDb(): \H2Orm\connection\DbConnection
+    public static function getDb(): \H2Orm\core\DbConnection
     {
         $db = self::getComponent('db');
         return $db->getConnetion();

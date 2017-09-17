@@ -2,18 +2,20 @@
 
 namespace FTwo\db;
 
+use FTwo\core\Component;
+
 /**
  * Description of DbConnection
  *
  * @author Mateusz P <bananq@gmail.com>
  */
-class DbConnection extends \FTwo\core\Component
+class DbConnection extends Component
 {
     private $dbConn;
 
     public function __construct($config)
     {
-        $this->dbConn = new H2Orm\connection\DbConnection($config);
+        $this->dbConn = new \H2Orm\core\DbConnection($config);
     }
 
     public function getConnetion()
